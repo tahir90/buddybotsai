@@ -170,7 +170,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             className="relative"
           >
             {/* 👀 Peeking Head Bot - positioned behind form container, peeking from top edge */}
-            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 z-0 hidden md:block">
+            <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 z-0 hidden md:block">
               <img
                 src="/bots/hero.png"
                 alt="Peeking Head Bot - Attention cue toward form"
