@@ -1,147 +1,110 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, ArrowLeft, Calendar, Clock, CheckCircle, User } from 'lucide-react';
+import { Phone, ArrowLeft, CheckCircle, Calendar, Clock, User } from 'lucide-react';
 
 interface StrategyCallProps {
   onBack: () => void;
 }
 
 const StrategyCall: React.FC<StrategyCallProps> = ({ onBack }) => {
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    company: '',
-    role: '',
-    challenges: ''
-  });
-
-  const [isBooked, setIsBooked] = useState(false);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleBooking = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  useEffect(() => {
     // Google Tag Manager event tracking
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
-        event: 'strategy_call_booked',
-        event_category: 'conversion',
-        event_label: 'Strategy-Call-Booking'
+        event: 'strategy_call_page_view',
+        event_category: 'booking',
+        event_label: 'Strategy-Call-Page-Loaded'
       });
     }
-    
-    setIsBooked(true);
-  };
 
-  // Generate next 14 days for booking
-  const getAvailableDates = () => {
-    const dates = [];
-    const today = new Date();
-    
-    for (let i = 1; i <= 14; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
+    // Simple script injection - exactly like the working version
+    const script = document.createElement('script');
+    script.innerHTML = `
+      (function (C, A, L) { 
+        let p = function (a, ar) { a.q.push(ar); }; 
+        let d = C.document; 
+        C.Cal = C.Cal || function () { 
+          let cal = C.Cal; 
+          let ar = arguments; 
+          if (!cal.loaded) { 
+            cal.ns = {}; 
+            cal.q = cal.q || []; 
+            d.head.appendChild(d.createElement("script")).src = A; 
+            cal.loaded = true; 
+          } 
+          if (ar[0] === L) { 
+            const api = function () { p(api, arguments); }; 
+            const namespace = ar[1]; 
+            api.q = api.q || []; 
+            if(typeof namespace === "string"){
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ["initNamespace", namespace]);
+            } else p(cal, ar); 
+            return;
+          } 
+          p(cal, ar); 
+        }; 
+      })(window, "https://app.cal.com/embed/embed.js", "init");
       
-      // Skip weekends
-      if (date.getDay() !== 0 && date.getDay() !== 6) {
-        dates.push({
-          value: date.toISOString().split('T')[0],
-          label: date.toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            month: 'long', 
-            day: 'numeric' 
-          })
-        });
-      }
-    }
+      Cal("init", "30min", {origin:"https://app.cal.com"});
+
+      Cal.ns["30min"]("inline", {
+        elementOrSelector:"#my-cal-inline-30min",
+        config: {"layout":"month_view"},
+        calLink: "buddybotsai/30min",
+      });
+
+      Cal.ns["30min"]("ui", {
+        "cssVarsPerTheme":{
+          "light":{"cal-brand":"#FFC400"},
+          "dark":{"cal-brand":"#FFC400"}
+        },
+        "hideEventTypeDetails":true,
+        "layout":"month_view"
+      });
+    `;
     
-    return dates;
-  };
+    document.head.appendChild(script);
 
-  const availableTimes = [
-    '9:00 AM EST',
-    '10:00 AM EST',
-    '11:00 AM EST',
-    '1:00 PM EST',
-    '2:00 PM EST',
-    '3:00 PM EST',
-    '4:00 PM EST'
+    // Cleanup function
+    return () => {
+      // Clean up the script when component unmounts
+      const scripts = document.querySelectorAll('script');
+      scripts.forEach(s => {
+        if (s.innerHTML.includes('Cal("init"')) {
+          s.remove();
+        }
+      });
+    };
+  }, []);
+
+  const benefits = [
+    {
+      icon: Calendar,
+      title: "45-Minute Deep Dive",
+      description: "Comprehensive analysis of your operations and automation opportunities"
+    },
+    {
+      icon: CheckCircle,
+      title: "Custom ROI Assessment", 
+      description: "Preliminary savings projections specific to your business"
+    },
+    {
+      icon: User,
+      title: "Expert Consultation",
+      description: "Direct access to our AI transformation specialists"
+    },
+    {
+      icon: Clock,
+      title: "Implementation Roadmap",
+      description: "Clear next steps if we're a good fit for your goals"
+    }
   ];
-
-  const roles = [
-    'CEO/President',
-    'COO',
-    'CTO',
-    'VP Operations',
-    'Director',
-    'Manager',
-    'Other'
-  ];
-
-  if (isBooked) {
-    return (
-      <div className="min-h-screen bg-canvas-navy pt-20 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-2xl mx-auto px-6 text-center"
-        >
-          <div className="bg-elevated-card rounded-xl p-12 border border-success-green">
-            <CheckCircle className="w-16 h-16 text-success-green mx-auto mb-6" />
-            <h1 className="text-primary-text font-inter font-bold text-3xl mb-4">
-              Strategy Call Booked!
-            </h1>
-            <p className="text-body-text font-inter text-lg mb-6">
-              Thank you for booking your strategy call. We'll send you a calendar invitation and preparation materials within the next hour.
-            </p>
-            <div className="bg-canvas-navy rounded-lg p-6 mb-6">
-              <h3 className="text-amber-cta font-inter font-bold text-lg mb-4">What to Expect:</h3>
-              <ul className="text-left space-y-2">
-                <li className="flex items-start space-x-2">
-                  <CheckCircle className="w-5 h-5 text-success-green mt-0.5 flex-shrink-0" />
-                  <span className="text-body-text font-inter">45-minute deep-dive into your operations</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <CheckCircle className="w-5 h-5 text-success-green mt-0.5 flex-shrink-0" />
-                  <span className="text-body-text font-inter">Custom automation opportunities assessment</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <CheckCircle className="w-5 h-5 text-success-green mt-0.5 flex-shrink-0" />
-                  <span className="text-body-text font-inter">Preliminary ROI projections</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <CheckCircle className="w-5 h-5 text-success-green mt-0.5 flex-shrink-0" />
-                  <span className="text-body-text font-inter">Next steps roadmap (if it's a good fit)</span>
-                </li>
-              </ul>
-            </div>
-            <button
-              onClick={onBack}
-              className="bg-amber-cta text-canvas-navy px-8 py-3 rounded-full font-inter font-bold hover:bg-canvas-navy hover:text-amber-cta border-2 border-transparent hover:border-amber-cta transition-all duration-200"
-            >
-              Return to Home
-            </button>
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-canvas-navy pt-20">
-      <div className="max-w-4xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -165,198 +128,127 @@ const StrategyCall: React.FC<StrategyCallProps> = ({ onBack }) => {
                 Book Your Strategy Call
               </h1>
             </div>
-            <p className="text-body-text font-inter text-lg">
-              45-minute deep-dive to identify your biggest automation opportunities
+            <p className="text-body-text font-inter text-lg max-w-2xl mx-auto">
+              Schedule a 45-minute consultation to discover your biggest automation opportunities and get a custom ROI assessment
             </p>
           </div>
 
-          <form onSubmit={handleBooking} className="grid lg:grid-cols-2 gap-12">
-            {/* Personal Information */}
-            <div className="bg-elevated-card rounded-xl p-8 border border-neutral-stroke">
-              <h3 className="text-primary-text font-inter font-bold text-xl mb-6">
-                Your Information
-              </h3>
-
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-body-text font-inter font-medium mb-2">
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-body-text font-inter font-medium mb-2">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-body-text font-inter font-medium mb-2">
-                    Business Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-body-text font-inter font-medium mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-body-text font-inter font-medium mb-2">
-                    Company Name
-                  </label>
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-body-text font-inter font-medium mb-2">
-                    Your Role
-                  </label>
-                  <select
-                    name="role"
-                    value={formData.role}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
-                  >
-                    <option value="">Select Your Role</option>
-                    {roles.map((role) => (
-                      <option key={role} value={role}>{role}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-body-text font-inter font-medium mb-2">
-                    Biggest Operational Challenge
-                  </label>
-                  <textarea
-                    name="challenges"
-                    value={formData.challenges}
-                    onChange={handleInputChange}
-                    rows={3}
-                    placeholder="Briefly describe your main operational pain point..."
-                    className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors resize-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Date & Time Selection */}
-            <div className="bg-elevated-card rounded-xl p-8 border border-neutral-stroke">
-              <h3 className="text-primary-text font-inter font-bold text-xl mb-6">
-                Select Date & Time
-              </h3>
-
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-body-text font-inter font-medium mb-3">
-                    <Calendar className="w-5 h-5 inline mr-2" />
-                    Available Dates
-                  </label>
-                  <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto">
-                    {getAvailableDates().map((date) => (
-                      <button
-                        key={date.value}
-                        type="button"
-                        onClick={() => setSelectedDate(date.value)}
-                        className={`text-left px-4 py-3 rounded-lg border transition-all duration-200 ${
-                          selectedDate === date.value
-                            ? 'bg-amber-cta text-canvas-navy border-amber-cta'
-                            : 'bg-canvas-navy text-primary-text border-neutral-stroke hover:border-cyan-interactive'
-                        }`}
+          <div className="grid lg:grid-cols-[400px_1fr] gap-12 items-start">
+            {/* Left Column - Benefits */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-6"
+            >
+              <div>
+                <h3 className="text-primary-text font-inter font-bold text-xl mb-6">
+                  What You'll Get:
+                </h3>
+                
+                <div className="space-y-4">
+                  {benefits.map((benefit, index) => {
+                    const IconComponent = benefit.icon;
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                        className="flex items-start space-x-3"
                       >
-                        {date.label}
-                      </button>
-                    ))}
-                  </div>
+                        <div className="w-10 h-10 bg-amber-cta bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <IconComponent className="w-5 h-5 text-amber-cta" />
+                        </div>
+                        <div>
+                          <h4 className="text-primary-text font-inter font-semibold text-base mb-1">
+                            {benefit.title}
+                          </h4>
+                          <p className="text-body-text font-inter text-sm leading-relaxed">
+                            {benefit.description}
+                          </p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
-
-                {selectedDate && (
-                  <div>
-                    <label className="block text-body-text font-inter font-medium mb-3">
-                      <Clock className="w-5 h-5 inline mr-2" />
-                      Available Times
-                    </label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {availableTimes.map((time) => (
-                        <button
-                          key={time}
-                          type="button"
-                          onClick={() => setSelectedTime(time)}
-                          className={`px-4 py-3 rounded-lg border transition-all duration-200 ${
-                            selectedTime === time
-                              ? 'bg-amber-cta text-canvas-navy border-amber-cta'
-                              : 'bg-canvas-navy text-primary-text border-neutral-stroke hover:border-cyan-interactive'
-                          }`}
-                        >
-                          {time}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {selectedDate && selectedTime && (
-                  <div className="bg-canvas-navy rounded-lg p-4 border border-success-green">
-                    <h4 className="text-success-green font-inter font-bold mb-2">Selected Appointment:</h4>
-                    <p className="text-primary-text font-inter">
-                      {getAvailableDates().find(d => d.value === selectedDate)?.label} at {selectedTime}
-                    </p>
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={!selectedDate || !selectedTime}
-                  className="w-full bg-amber-cta text-canvas-navy px-6 py-4 rounded-full font-inter font-bold text-lg hover:bg-canvas-navy hover:text-amber-cta border-2 border-transparent hover:border-amber-cta transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Book My Strategy Call
-                </button>
               </div>
-            </div>
-          </form>
+
+              {/* Trust Indicators */}
+              <div className="bg-elevated-card rounded-xl p-6 border border-neutral-stroke">
+                <h4 className="text-primary-text font-inter font-bold text-lg mb-4">
+                  Why Book With Us?
+                </h4>
+                <ul className="space-y-3">
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-4 h-4 text-success-green flex-shrink-0" />
+                    <span className="text-body-text font-inter text-sm">150+ successful AI transformations</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-4 h-4 text-success-green flex-shrink-0" />
+                    <span className="text-body-text font-inter text-sm">Average 30% cost reduction in 90 days</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-4 h-4 text-success-green flex-shrink-0" />
+                    <span className="text-body-text font-inter text-sm">Risk-free consultation</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-4 h-4 text-success-green flex-shrink-0" />
+                    <span className="text-body-text font-inter text-sm">No obligation to proceed</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Guarantee */}
+              <div className="bg-ai-glow-gradient bg-opacity-10 rounded-xl p-6 border border-amber-cta">
+                <div className="flex items-center space-x-3 mb-3">
+                  <CheckCircle className="w-5 h-5 text-amber-cta" />
+                  <h4 className="text-primary-text font-inter font-bold text-base">
+                    Our Promise
+                  </h4>
+                </div>
+                <p className="text-body-text font-inter text-sm">
+                  If we can't identify at least $250K in annual savings potential during our call, 
+                  we'll refer you to more suitable solutions at no charge.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Right Column - Cal.com Embed */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-elevated-card rounded-xl border border-neutral-stroke overflow-hidden"
+            >
+              <div className="p-6 border-b border-neutral-stroke">
+                <h3 className="text-primary-text font-inter font-bold text-xl text-center">
+                  Select Your Preferred Time
+                </h3>
+                <p className="text-body-text font-inter text-center mt-2">
+                  All times shown in your local timezone
+                </p>
+              </div>
+              
+              {/* Cal.com Inline Embed */}
+              <div className="h-[600px] w-full">
+                <div 
+                  id="my-cal-inline-30min" 
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'auto'
+                  }}
+                />
+              </div>
+              
+              <div className="p-4 border-t border-neutral-stroke bg-canvas-navy">
+                <p className="text-body-text font-inter text-sm text-center">
+                  📧 You'll receive an instant confirmation email with meeting details and preparation materials
+                </p>
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </div>

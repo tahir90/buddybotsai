@@ -34,8 +34,8 @@ const Guarantee: React.FC = () => {
             className="flex justify-center md:justify-end"
           >
             <img
-              src="/bots/ROI.png"
-              alt="ROI Guarantee Bot"
+              src="/ROI.png"
+              alt="ROI Guarantee Bot - Trust and risk reversal"
               className="drop-shadow-lg w-[200px] h-[230px] object-contain"
             />
           </motion.div>

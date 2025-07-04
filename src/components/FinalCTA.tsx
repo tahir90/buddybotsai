@@ -92,18 +92,16 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
           
           {/* CTA Button Container with Bot - aligned on same horizontal plane */}
           <div className="flex flex-col lg:flex-row items-center justify-center gap-6 mb-6">
-	
-{/* 📣 Final CTA Bot - positioned right of button, same horizontal plane */}
+            {/* 📣 Final CTA Bot - positioned left of button, same horizontal plane */}
             <motion.div
-              initial={{ opacity: 0, x: 30, scale: 0.8 }}
+              initial={{ opacity: 0, x: -30, scale: 0.8 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.5 }}
               viewport={{ once: true }}
-              className="lg:ml-6 flex items-center"
-              style={{ paddingLeft: '0px' }}
+              className="lg:mr-6 flex items-center"
             >
               <img
-                src="/bots/spots.png"
+                src="/spots.png"
                 alt="Final CTA Bot - Urgency to convert"
                 className="drop-shadow-lg"
                 style={{ width: '140px', height: 'auto' }}
@@ -119,13 +117,11 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
             >
               Get My Free ROI Forecast
             </motion.button>
-            
-            
           </div>
           
           {/* Fine print */}
-          <p className="text-body-text font-inter text-sm" style={{ paddingLeft: '60px' }}>
-            No obligation • Free consultation • Results guaranteed • 24-hour response • Guaranteed ROI
+          <p className="text-body-text font-inter text-sm">
+            No obligation • Free consultation • Results guaranteed • 24-hour response
           </p>
         </motion.div>
       </div>

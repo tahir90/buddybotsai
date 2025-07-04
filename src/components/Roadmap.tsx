@@ -48,21 +48,19 @@ const Roadmap: React.FC = () => {
         <div className="relative">
           {/* ✅ Bot image placed absolutely relative to timeline */}
           <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, delay: 0.8 }}
-  viewport={{ once: true }}
-  className="absolute top-[0px] left-[calc(50%+220px)] hidden md:block z-10"
->
-  <img
-    src="/bots/blueprint.png"
-    alt="Roadmap Buddy"
-    className="drop-shadow-lg transform scale-x-[-1]"
-    style={{ width: '140px', height: '160px' }}
-  />
-</motion.div>
-
-
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            viewport={{ once: true }}
+            className="absolute top-[0px] left-[calc(50%+220px)] hidden md:block z-10"
+          >
+            <img
+              src="/blueprint.png"
+              alt="Roadmap Buddy - Structured guidance reinforcement"
+              className="drop-shadow-lg transform scale-x-[-1]"
+              style={{ width: '140px', height: '160px' }}
+            />
+          </motion.div>
 
           {/* Timeline vertical line */}
           <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-amber-cta h-full hidden md:block"></div>

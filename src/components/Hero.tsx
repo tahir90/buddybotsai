@@ -42,7 +42,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       (window as any).dataLayer.push({
         event: 'cta_click',
         event_category: 'engagement',
-        event_label: 'Hero-Strategy-Call-Click'
+        event_label: 'Hero-Cal-Booking-Click'
       });
     }
     
@@ -172,7 +172,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             {/* 👀 Peeking Head Bot - positioned behind form container, peeking from top edge */}
             <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 z-0 hidden md:block">
               <img
-                src="/bots/hero.png"
+                src="/hero.png"
                 alt="Peeking Head Bot - Attention cue toward form"
                 className="w-30 h-25 drop-shadow-lg"
                 style={{ width: '120px', height: '100px' }}

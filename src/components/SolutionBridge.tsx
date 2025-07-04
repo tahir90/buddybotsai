@@ -24,46 +24,49 @@ const SolutionBridge: React.FC = () => {
           </p>
         </motion.div>
         
-        {/* Animated Bridge Line with properly centered dots */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          transition={{ duration: 1.2, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="relative mx-auto max-w-5xl mb-8"
-        >
-          {/* Main bridge line */}
-          <div className="h-1 bg-ai-glow-gradient mx-auto origin-left relative">
-            {/* Animated dots along the line - perfectly centered */}
+        {/* Bridge visualization with circles and labels properly aligned */}
+        <div className="max-w-5xl mx-auto">
+          <div className="relative h-20">
+            {/* Main bridge line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ duration: 1.2, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="absolute top-6 left-0 right-0 h-1 bg-ai-glow-gradient origin-left"
+            >
+              {/* Circles positioned absolutely on the line */}
+              {bridgeSteps.map((step, index) => (
+                <motion.div
+                  key={`circle-${index}`}
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.4, delay: 0.8 + index * 0.2 }}
+                  viewport={{ once: true }}
+                  className={`absolute w-4 h-4 ${step.color} rounded-full -top-1.5`}
+                  style={{ 
+                    left: `${(index * 100) / (bridgeSteps.length - 1)}%`,
+                    transform: 'translateX(-50%)'
+                  }}
+                />
+              ))}
+            </motion.div>
+            
+            {/* Labels positioned with proper centering under each circle */}
             {bridgeSteps.map((step, index) => (
               <motion.div
-                key={index}
-                initial={{ scale: 0, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.4, delay: 0.8 + index * 0.2 }}
-                viewport={{ once: true }}
-                className={`absolute w-4 h-4 ${step.color} rounded-full`}
-                style={{ 
-                  left: `${(index * 100) / (bridgeSteps.length - 1)}%`, 
-                  top: '-6px',
-                  transform: 'translateX(-50%)'
-                }}
-              ></motion.div>
-            ))}
-          </div>
-          
-          {/* Bridge labels - properly aligned */}
-          <div className="grid grid-cols-4 gap-4 mt-8">
-            {bridgeSteps.map((step, index) => (
-              <motion.div
-                key={index}
+                key={`label-${index}`}
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 1.4 + index * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center"
+                className="absolute top-12"
+                style={{ 
+                  left: `${(index * 100) / (bridgeSteps.length - 1)}%`,
+                  transform: 'translateX(-50%)'
+                }}
               >
-                <div className={`text-sm font-inter font-medium ${
+                <div className={`text-sm font-inter font-medium text-center whitespace-nowrap ${
                   index === 0 ? 'text-warning-red' : 
                   index === 1 ? 'text-cyan-interactive' :
                   index === 2 ? 'text-amber-cta' : 'text-success-green'
@@ -73,7 +76,7 @@ const SolutionBridge: React.FC = () => {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

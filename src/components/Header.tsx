@@ -25,11 +25,11 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
       (window as any).dataLayer.push({
         event: 'cta_click',
         event_category: 'engagement',
-        event_label: 'Header-ROI-Forecast-Click'
+        event_label: 'Header-Cal-Booking-Click'
       });
     }
     
-    onNavigate('contact');
+    onNavigate('strategy-call');
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -86,7 +86,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
           onClick={handleCTAClick}
           className="hidden md:block bg-amber-cta text-canvas-navy px-6 py-2 rounded-full font-inter font-bold text-sm hover:bg-canvas-navy hover:text-amber-cta border-2 border-transparent hover:border-amber-cta transition-all duration-200"
         >
-          Get My Free ROI Forecast
+          Book Strategy Call
         </button>
         
         {/* Mobile Menu Button */}
@@ -120,7 +120,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
               onClick={handleCTAClick}
               className="w-full bg-amber-cta text-canvas-navy px-6 py-3 rounded-full font-inter font-bold text-sm hover:bg-canvas-navy hover:text-amber-cta border-2 border-transparent hover:border-amber-cta transition-all duration-200"
             >
-              Get My Free ROI Forecast
+              Book Strategy Call
             </button>
           </div>
         </motion.div>
