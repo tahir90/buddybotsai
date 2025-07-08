@@ -76,7 +76,7 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
                   viewport={{ once: true }}
                   className="flex items-center space-x-2"
                 >
-                  <IconComponent className="w-6 h-6 text-success-green" />
+                  <IconComponent className="w-6 h-6 text-primary-purple" />
                   <span className="text-primary-text font-inter text-lg">{benefit.text}</span>
                 </motion.div>
               );
@@ -101,7 +101,7 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
               className="lg:mr-6 flex items-center"
             >
               <img
-                src="/spots.png"
+                src="./spots.png"
                 alt="Final CTA Bot - Urgency to convert"
                 className="drop-shadow-lg"
                 style={{ width: '140px', height: 'auto' }}
@@ -110,12 +110,23 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
 
             {/* Main CTA Button */}
             <motion.button
-              onClick={handleCTAClick}
-              className="bg-amber-cta text-canvas-navy px-12 py-6 rounded-full font-inter font-bold text-xl hover:bg-canvas-navy hover:text-amber-cta border-2 border-transparent hover:border-amber-cta transform hover:scale-105 transition-all duration-200 animate-glow"
+              onClick={() => {
+                // Google Tag Manager event tracking
+                if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                  (window as any).dataLayer.push({
+                    event: 'cta_click',
+                    event_category: 'engagement',
+                    event_label: 'Final-Strategy-Call-Click'
+                  });
+                }
+                
+                onNavigate('strategy-call');
+              }}
+              className="bg-primary-purple text-primary-text px-12 py-6 rounded-full font-inter font-bold text-xl hover:bg-primary-magenta hover:text-primary-text border-2 border-transparent hover:border-primary-magenta transform hover:scale-105 transition-all duration-200 animate-glow"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Get My Free ROI Forecast
+              Book My Strategy Call
             </motion.button>
           </div>
           

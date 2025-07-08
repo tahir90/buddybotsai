@@ -4,9 +4,17 @@ import { Phone, ArrowLeft, CheckCircle, Calendar, Clock, User } from 'lucide-rea
 
 interface StrategyCallProps {
   onBack: () => void;
+  prefillData?: {
+    name?: string;
+    email?: string;
+    company?: string;
+    phone?: string;
+    industry?: string;
+    annualRevenue?: string;
+  };
 }
 
-const StrategyCall: React.FC<StrategyCallProps> = ({ onBack }) => {
+const StrategyCall: React.FC<StrategyCallProps> = ({ onBack, prefillData }) => {
   useEffect(() => {
     // Google Tag Manager event tracking
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
@@ -49,20 +57,25 @@ const StrategyCall: React.FC<StrategyCallProps> = ({ onBack }) => {
       
       Cal("init", "30min", {origin:"https://app.cal.com"});
 
+      // Build config object with prefill data
+      var config = {
+        layout: "month_view"
+      };
+      
+      // Add prefill data if available
+      ${prefillData?.name ? `config.name = "${prefillData.name}";` : ''}
+      ${prefillData?.email ? `config.email = "${prefillData.email}";` : ''}
+      ${prefillData?.phone ? `config.attendeePhoneNumber = "${prefillData.phone}";` : ''}
+      ${prefillData?.company ? `config.CompanyName = "${prefillData.company}";` : ''}
+      ${prefillData?.industry ? `config.industry = "${prefillData.industry}";` : ''}
+      ${prefillData?.annualRevenue ? `config["Annual-Revenue"] = "${prefillData.annualRevenue}";` : ''}
       Cal.ns["30min"]("inline", {
         elementOrSelector:"#my-cal-inline-30min",
-        config: {"layout":"month_view"},
+        config: config,
         calLink: "buddybotsai/30min",
       });
 
-      Cal.ns["30min"]("ui", {
-        "cssVarsPerTheme":{
-          "light":{"cal-brand":"#FFC400"},
-          "dark":{"cal-brand":"#FFC400"}
-        },
-        "hideEventTypeDetails":true,
-        "layout":"month_view"
-      });
+      Cal.ns["30min"]("ui", {"cssVarsPerTheme":{"dark":{"cal-brand":"#9c5de9"}},"hideEventTypeDetails":true,"layout":"month_view"});
     `;
     
     document.head.appendChild(script);
@@ -77,7 +90,7 @@ const StrategyCall: React.FC<StrategyCallProps> = ({ onBack }) => {
         }
       });
     };
-  }, []);
+  }, [prefillData]);
 
   const benefits = [
     {
@@ -123,7 +136,7 @@ const StrategyCall: React.FC<StrategyCallProps> = ({ onBack }) => {
 
           <div className="text-center mb-12">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <Phone className="w-8 h-8 text-amber-cta" />
+              <Phone className="w-8 h-8 text-primary-purple" />
               <h1 className="text-primary-text font-inter font-bold text-3xl md:text-4xl">
                 Book Your Strategy Call
               </h1>
@@ -158,7 +171,7 @@ const StrategyCall: React.FC<StrategyCallProps> = ({ onBack }) => {
                         className="flex items-start space-x-3"
                       >
                         <div className="w-10 h-10 bg-amber-cta bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <IconComponent className="w-5 h-5 text-amber-cta" />
+                          <IconComponent className="w-5 h-5 text-primary-purple" />
                         </div>
                         <div>
                           <h4 className="text-primary-text font-inter font-semibold text-base mb-1">
@@ -201,16 +214,17 @@ const StrategyCall: React.FC<StrategyCallProps> = ({ onBack }) => {
 
               {/* Guarantee */}
               <div className="bg-ai-glow-gradient bg-opacity-10 rounded-xl p-6 border border-amber-cta">
-                <div className="flex items-center space-x-3 mb-3">
-                  <CheckCircle className="w-5 h-5 text-amber-cta" />
-                  <h4 className="text-primary-text font-inter font-bold text-base">
-                    Our Promise
-                  </h4>
+                <div className="bg-ai-glow-gradient bg-opacity-10 rounded-xl p-6 border border-primary-purple">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <CheckCircle className="w-5 h-5 text-primary-purple" />
+                    <h4 className="text-primary-text font-inter font-bold text-base">
+                      Strategy Call Promise
+                    </h4>
+                  </div>
+                  <p className="text-body-text font-inter text-sm">
+                    We'll identify at least 3 specific opportunities—or you'll walk away with clear, actionable insights to elevate your business.
+                  </p>
                 </div>
-                <p className="text-body-text font-inter text-sm">
-                  If we can't identify at least $250K in annual savings potential during our call, 
-                  we'll refer you to more suitable solutions at no charge.
-                </p>
               </div>
             </motion.div>
 
@@ -231,14 +245,9 @@ const StrategyCall: React.FC<StrategyCallProps> = ({ onBack }) => {
               </div>
               
               {/* Cal.com Inline Embed */}
-              <div className="h-[600px] w-full">
+              <div style={{width:'100%',height:'100%',overflow:'scroll'}} className="h-[600px] w-full">
                 <div 
                   id="my-cal-inline-30min" 
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    overflow: 'auto'
-                  }}
                 />
               </div>
               

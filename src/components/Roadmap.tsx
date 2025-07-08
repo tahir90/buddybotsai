@@ -55,7 +55,7 @@ const Roadmap: React.FC = () => {
             className="absolute top-[0px] left-[calc(50%+220px)] hidden md:block z-10"
           >
             <img
-              src="/blueprint.png"
+              src="./blueprint.png"
               alt="Roadmap Buddy - Structured guidance reinforcement"
               className="drop-shadow-lg transform scale-x-[-1]"
               style={{ width: '140px', height: '160px' }}
@@ -63,7 +63,7 @@ const Roadmap: React.FC = () => {
           </motion.div>
 
           {/* Timeline vertical line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-amber-cta h-full hidden md:block"></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-primary-purple h-full hidden md:block"></div>
 
           <div className="space-y-12 md:space-y-16 relative">
             {roadmapSteps.map((step, index) => {
@@ -81,7 +81,8 @@ const Roadmap: React.FC = () => {
                   } flex-col md:space-x-8`}
                 >
                   {/* Timeline dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-amber-cta rounded-full border-4 border-canvas-navy z-10 hidden md:block"></div>
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary-blue rounded-full border-4 border-canvas-navy z-10 hidden md:block"></div>
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary-purple rounded-full border-4 border-canvas-navy z-10 hidden md:block"></div>
 
                   {/* Content card */}
                   <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'} text-center md:text-left relative`}>
@@ -89,8 +90,8 @@ const Roadmap: React.FC = () => {
                       <div className={`flex items-center space-x-3 mb-4 ${
                         index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'
                       } justify-center`}>
-                        <IconComponent className="w-6 h-6 text-amber-cta" />
-                        <span className="text-amber-cta font-inter font-bold">{step.week}</span>
+                        <IconComponent className="w-6 h-6 text-primary-magenta" />
+                        <span className="text-primary-magenta font-inter font-bold">{step.week}</span>
                       </div>
 
                       <h3 className="text-primary-text font-inter font-bold text-xl mb-3">

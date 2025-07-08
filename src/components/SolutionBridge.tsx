@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 const SolutionBridge: React.FC = () => {
   const bridgeSteps = [
     { label: 'Manual Chaos', color: 'bg-warning-red' },
-    { label: 'Process Audit', color: 'bg-cyan-interactive' },
-    { label: 'AI Integration', color: 'bg-amber-cta' },
+    { label: 'Process Audit', color: 'bg-primary-magenta' },
+    { label: 'AI Integration', color: 'bg-primary-purple' },
     { label: 'Automated Profits', color: 'bg-success-green' }
   ];
 
@@ -33,7 +33,7 @@ const SolutionBridge: React.FC = () => {
               whileInView={{ scaleX: 1 }}
               transition={{ duration: 1.2, delay: 0.3 }}
               viewport={{ once: true }}
-              className="absolute top-6 left-0 right-0 h-1 bg-ai-glow-gradient origin-left"
+              className="absolute top-6 left-0 right-0 h-1 bg-purple-gradient origin-left"
             >
               {/* Circles positioned absolutely on the line */}
               {bridgeSteps.map((step, index) => (
@@ -68,8 +68,8 @@ const SolutionBridge: React.FC = () => {
               >
                 <div className={`text-sm font-inter font-medium text-center whitespace-nowrap ${
                   index === 0 ? 'text-warning-red' : 
-                  index === 1 ? 'text-cyan-interactive' :
-                  index === 2 ? 'text-amber-cta' : 'text-success-green'
+                  index === 1 ? 'text-primary-magenta' :
+                  index === 2 ? 'text-primary-purple' : 'text-success-green'
                 }`}>
                   {step.label}
                 </div>

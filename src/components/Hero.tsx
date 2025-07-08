@@ -8,6 +8,8 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     companyName: '',
     industry: '',
     annualRevenue: '',
@@ -42,7 +44,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       (window as any).dataLayer.push({
         event: 'cta_click',
         event_category: 'engagement',
-        event_label: 'Hero-Cal-Booking-Click'
+        event_label: 'Hero-Strategy-Call-Click'
       });
     }
     
@@ -61,15 +63,26 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       });
     }
     
-    // Navigate to full contact form with pre-filled data
-    onNavigate('contact');
+    // Navigate to strategy call with pre-filled data
+    const prefillData = {
+      name: `${formData.firstName || ''} ${formData.lastName || ''}`.trim(),
+      email: formData.email,
+      company: formData.companyName,
+      phone: formData.phone,
+      industry: formData.industry,
+      annualRevenue: formData.annualRevenue
+    };
+    
+    // Pass the data to the navigation function
+    onNavigate('strategy-call');
+    
+    // Set the form data in a way that StrategyCall can access it
+    setTimeout(() => {
+      const event = new CustomEvent('hero-form-data', { detail: prefillData });
+      window.dispatchEvent(event);
+    }, 100);
   };
 
-  const achievements = [
-    { icon: CheckCircle, text: '240+ Hours Saved' },
-    { icon: CheckCircle, text: '85% Error Reduction' },
-    { icon: CheckCircle, text: '150+ Companies Buddy-fied' }
-  ];
 
   const industries = [
     'Manufacturing',
@@ -102,84 +115,108 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           >
             <div className="absolute inset-0 bg-ai-glow-gradient opacity-20 blur-3xl rounded-full"></div>
             
+            {/* AI Transformation Agency Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center space-x-2 bg-primary-purple bg-opacity-20 rounded-full px-6 py-3 border border-primary-purple border-opacity-50 mb-6"
+            >
+              <div className="w-3 h-3 bg-primary-purple rounded-full animate-pulse"></div>
+              <span className="text-primary-purple font-inter font-bold text-sm uppercase tracking-wide">
+                AI Transformation Agency
+              </span>
+            </motion.div>
+            
+            {/* Main Headline - More Concise */}
             <h1 className="relative text-primary-text font-inter font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 drop-shadow-ai-glow">
               Cut Costs by{' '}
               <span className="bg-ai-glow-gradient bg-clip-text text-transparent">
                 30%
-              </span>{' '}
-              in 90 Days—Without Laying Off a Single Team Member
+              </span>
+              {' '}in 90 Days{' '}
+              <span className="block text-2xl md:text-3xl lg:text-4xl text-body-text font-normal mt-2">
+                — Unlock Hidden Efficiency & Growth
+              </span>
             </h1>
             
-            <p className="text-body-text font-inter text-lg md:text-xl leading-relaxed mb-8">
-              Our AI buddies bolt onto your systems, streamline workflows & amplify ROI—without disrupting your teams.
+            {/* Simplified Value Proposition */}
+            <p className="text-body-text font-inter text-lg md:text-xl leading-relaxed mb-4">
+              We turn everyday teams into <span className="text-amber-500 font-semibold">"buddy-fied"</span> departments — automated, data-driven, and built for AI-powered ROI and growth.
             </p>
             
-            {/* Achievement Stats */}
-            <div className="space-y-4 mb-8">
-              {achievements.map((achievement, index) => {
-                const IconComponent = achievement.icon;
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-                    className="flex items-center space-x-3"
-                  >
-                    <IconComponent className="w-6 h-6 text-success-green" />
-                    <span className="text-primary-text font-inter text-lg font-semibold">{achievement.text}</span>
-                  </motion.div>
-                );
-              })}
+            {/* Buddy-fied Definition */}
+            <div className="bg-elevated-card rounded-lg p-4 mb-6 border border-primary-purple border-opacity-30">
+              <p className="text-body-text font-inter text-sm leading-relaxed">
+                <span className="text-amber-500 font-inter font-bold">✨ Buddy-fied Department</span> = ≥ 25% manual hours automated + a live KPI dashboard.
+              </p>
             </div>
             
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            {/* Compact Achievement Stats - Horizontal Layout */}
+            <div className="flex flex-wrap gap-4 mb-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="flex items-center space-x-2 bg-elevated-card rounded-full px-4 py-2 border border-neutral-stroke"
+              >
+                <CheckCircle className="w-4 h-4 text-success-green" />
+                <span className="text-primary-text font-inter text-sm font-semibold">240+ Hours Saved</span>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="flex items-center space-x-2 bg-elevated-card rounded-full px-4 py-2 border border-neutral-stroke"
+              >
+                <CheckCircle className="w-4 h-4 text-success-green" />
+                <span className="text-primary-text font-inter text-sm font-semibold">85% Error Reduction</span>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+                className="flex items-center space-x-2 bg-elevated-card rounded-full px-4 py-2 border border-neutral-stroke"
+              >
+                <CheckCircle className="w-4 h-4 text-success-green" />
+                <span className="text-primary-text font-inter text-sm font-semibold">50+ Companies Buddy-fied</span>
+              </motion.div>
+            </div>
+            
+            {/* Single CTA Button */}
+            <div className="flex justify-start mb-8">
               <motion.button
                 onClick={handleROICalculatorClick}
-                className="bg-amber-cta text-canvas-navy px-8 py-4 rounded-full font-inter font-bold text-lg hover:bg-canvas-navy hover:text-amber-cta border-2 border-transparent hover:border-amber-cta transform hover:scale-105 transition-all duration-200 animate-glow flex items-center justify-center space-x-2"
+                className="bg-amber-500 text-canvas-navy px-8 py-4 rounded-full font-inter font-bold text-lg hover:bg-amber-600 hover:text-canvas-navy border-2 border-transparent hover:border-amber-600 transform hover:scale-105 transition-all duration-200 animate-glow flex items-center justify-center space-x-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Calculator className="w-5 h-5" />
-                <span>Get ROI Calculator</span>
-              </motion.button>
-              
-              <motion.button
-                onClick={handleStrategyCallClick}
-                className="bg-transparent text-cyan-interactive px-8 py-4 rounded-full font-inter font-bold text-lg border-2 border-cyan-interactive hover:bg-cyan-interactive hover:text-canvas-navy transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Phone className="w-5 h-5" />
-                <span>Book Strategy Call</span>
+                <span>Calculate My ROI</span>
               </motion.button>
             </div>
-            
-            {/* Social Proof */}
-            <p className="text-body-text font-inter text-sm">
-              Trusted by CEOs at 150+ Companies
-            </p>
           </motion.div>
 
-          {/* Right Column - Lead Form */}
+          {/* Right Column - Simplified Lead Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            {/* 👀 Peeking Head Bot - positioned behind form container, peeking from top edge */}
-            <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 z-0 hidden md:block">
+            {/* Peeking Head Bot */}
+            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 z-0 hidden md:block">
               <img
-                src="/hero.png"
-                alt="Peeking Head Bot - Attention cue toward form"
+                src="./hero.png"
+                alt="Peeking Head Bot"
                 className="w-30 h-25 drop-shadow-lg"
                 style={{ width: '120px', height: '100px' }}
               />
             </div>
 
-            <div className="bg-elevated-card rounded-xl p-8 shadow-2xl border border-neutral-stroke relative overflow-hidden z-10">
+            <div className="bg-elevated-card rounded-xl p-8 shadow-2xl border border-neutral-stroke relative overflow-hidden z-10 mt-4">
               <div className="absolute top-0 right-0 w-32 h-32 bg-ai-glow-gradient opacity-10 rounded-full transform translate-x-16 -translate-y-16"></div>
               
               <div className="relative z-10">
@@ -191,107 +228,94 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 </p>
                 
                 <form onSubmit={handleFormSubmit} className="space-y-4">
-                  <div>
+                  <div className="grid grid-cols-2 gap-4">
                     <input
                       type="text"
-                      name="companyName"
-                      placeholder="Company Name"
-                      value={formData.companyName}
+                      name="firstName"
+                      placeholder="First Name"
+                      value={formData.firstName}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 bg-secondary-bg border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-primary-purple focus:outline-none transition-colors"
                       required
                     />
-                  </div>
-                  
-                  <div>
-                    <select
-                      name="industry"
-                      value={formData.industry}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
-                      required
-                    >
-                      <option value="">Select Industry</option>
-                      {industries.map((industry) => (
-                        <option key={industry} value={industry}>{industry}</option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <select
-                      name="annualRevenue"
-                      value={formData.annualRevenue}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
-                      required
-                    >
-                      <option value="">Annual Revenue</option>
-                      {revenueRanges.map((range) => (
-                        <option key={range} value={range}>{range}</option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  <div>
                     <input
-                      type="tel"
-                      name="phone"
-                      placeholder="Phone Number"
-                      value={formData.phone}
+                      type="text"
+                      name="lastName"
+                      placeholder="Last Name"
+                      value={formData.lastName}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 bg-secondary-bg border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-primary-purple focus:outline-none transition-colors"
                       required
                     />
                   </div>
                   
-                  <div>
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Business Email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
-                      required
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    name="companyName"
+                    placeholder="Company Name"
+                    value={formData.companyName}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-secondary-bg border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-primary-purple focus:outline-none transition-colors"
+                    required
+                  />
+                  
+                  <select
+                    name="industry"
+                    value={formData.industry}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-secondary-bg border border-neutral-stroke rounded-lg text-primary-text font-inter focus:border-primary-purple focus:outline-none transition-colors"
+                    required
+                  >
+                    <option value="">Select Industry</option>
+                    {industries.map((industry) => (
+                      <option key={industry} value={industry}>{industry}</option>
+                    ))}
+                  </select>
+                  
+                  <select
+                    name="annualRevenue"
+                    value={formData.annualRevenue}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-secondary-bg border border-neutral-stroke rounded-lg text-primary-text font-inter focus:border-primary-purple focus:outline-none transition-colors"
+                    required
+                  >
+                    <option value="">Annual Revenue</option>
+                    {revenueRanges.map((range) => (
+                      <option key={range} value={range}>{range}</option>
+                    ))}
+                  </select>
+                  
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone Number"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-secondary-bg border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-primary-purple focus:outline-none transition-colors"
+                    required
+                  />
+                  
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Business Email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-secondary-bg border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-primary-purple focus:outline-none transition-colors"
+                    required
+                  />
                   
                   <button
                     type="submit"
-                    className="w-full bg-amber-cta text-canvas-navy px-6 py-4 rounded-full font-inter font-bold text-lg hover:bg-canvas-navy hover:text-amber-cta border-2 border-transparent hover:border-amber-cta transition-all duration-200"
+                    className="w-full bg-primary-purple text-primary-text px-6 py-4 rounded-full font-inter font-bold text-lg hover:bg-primary-magenta hover:text-primary-text border-2 border-transparent hover:border-primary-magenta transition-all duration-200 animate-glow"
                   >
-                    Get My Free Assessment
+                    Book My Strategy Call
                   </button>
                 </form>
                 
                 <p className="text-body-text font-inter text-xs mt-4 text-center">
-                  No spam. Unsubscribe anytime. Results in 24 hours.
+                  No spam • Results in 24 hours
                 </p>
-              </div>
-            </div>
-            
-            {/* Logo Carousel */}
-            <div className="mt-8">
-              <p className="text-body-text font-inter text-sm text-center mb-6">
-                Trusted by industry leaders
-              </p>
-              <div className="flex items-center justify-center space-x-4 flex-wrap gap-4">
-                <div className="w-20 h-12 bg-elevated-card border border-neutral-stroke rounded-lg flex items-center justify-center hover:border-amber-cta transition-colors">
-                  <span className="text-body-text font-inter text-xs font-semibold">ACME</span>
-                </div>
-                <div className="w-24 h-12 bg-elevated-card border border-neutral-stroke rounded-lg flex items-center justify-center hover:border-amber-cta transition-colors">
-                  <span className="text-body-text font-inter text-xs font-semibold">TechCorp</span>
-                </div>
-                <div className="w-20 h-12 bg-elevated-card border border-neutral-stroke rounded-lg flex items-center justify-center hover:border-amber-cta transition-colors">
-                  <span className="text-body-text font-inter text-xs font-semibold">Global</span>
-                </div>
-                <div className="w-24 h-12 bg-elevated-card border border-neutral-stroke rounded-lg flex items-center justify-center hover:border-amber-cta transition-colors">
-                  <span className="text-body-text font-inter text-xs font-semibold">Industries</span>
-                </div>
-                <div className="w-20 h-12 bg-elevated-card border border-neutral-stroke rounded-lg flex items-center justify-center hover:border-amber-cta transition-colors">
-                  <span className="text-body-text font-inter text-xs font-semibold">Innovate</span>
-                </div>
               </div>
             </div>
           </motion.div>

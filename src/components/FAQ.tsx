@@ -62,9 +62,9 @@ const FAQ: React.FC = () => {
                 </span>
                 <div className="flex-shrink-0">
                   {openFAQ === index ? (
-                    <Minus className="w-6 h-6 text-amber-cta" />
+                    <Minus className="w-6 h-6 text-primary-magenta" />
                   ) : (
-                    <Plus className="w-6 h-6 text-amber-cta" />
+                    <Plus className="w-6 h-6 text-primary-magenta" />
                   )}
                 </div>
               </button>

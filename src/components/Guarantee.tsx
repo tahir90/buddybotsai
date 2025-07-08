@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Shield } from 'lucide-react';
 
 const Guarantee: React.FC = () => {
   return (
@@ -14,14 +15,20 @@ const Guarantee: React.FC = () => {
             viewport={{ once: true }}
             className="text-left"
           >
+            <div className="inline-flex items-center space-x-3 bg-elevated-card rounded-full px-8 py-4 border border-primary-purple mb-8">
+              <Shield className="w-8 h-8 text-primary-purple" />
+              <div className="text-left">
+                <div className="text-primary-text font-inter font-bold text-lg">Performance Guarantee</div>
+                <div className="text-primary-purple font-inter text-sm">Measurable Results Within 90 Days</div>
+              </div>
+            </div>
+
             <h2 className="text-primary-text font-inter font-bold text-3xl md:text-4xl mb-6 max-w-2xl leading-tight">
-              ROI-or-Free 90-Day Guarantee
+              We Guarantee Documented ROI
             </h2>
 
             <p className="text-body-text font-inter text-lg leading-relaxed max-w-2xl">
-              We're so confident in our AI Transformation Sprint that we guarantee documented ROI within 90 days.
-              If you don't see measurable cost savings that exceed our fees, you pay nothing and keep all implemented solutions.
-              Your success is our only payment.
+              We stand behind every transformation with verified savings calculations and measurable performance metrics. Zero disruption, maximum impact, complete transparency.
             </p>
           </motion.div>
 
@@ -34,7 +41,7 @@ const Guarantee: React.FC = () => {
             className="flex justify-center md:justify-end"
           >
             <img
-              src="/ROI.png"
+              src="./ROI.png"
               alt="ROI Guarantee Bot - Trust and risk reversal"
               className="drop-shadow-lg w-[200px] h-[230px] object-contain"
             />

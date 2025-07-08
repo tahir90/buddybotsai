@@ -50,10 +50,11 @@ const Urgency: React.FC<UrgencyProps> = ({ onNavigate }) => {
     }
     
     if (onNavigate) {
-      onNavigate('contact');
+      onNavigate('strategy-call');
     } else {
-      // Fallback to scrolling to final CTA section
-      document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth' });
+      // Fallback to dispatching navigation event
+      const event = new CustomEvent('navigate-to-strategy-call');
+      window.dispatchEvent(event);
     }
   };
 
@@ -67,7 +68,7 @@ const Urgency: React.FC<UrgencyProps> = ({ onNavigate }) => {
           viewport={{ once: true }}
         >
           <h2 className="text-canvas-navy font-inter font-bold text-3xl md:text-4xl mb-8">
-            Only 4 Sprint Slots Left This Quarter
+            Only 4 Strategy Call Slots Left This Quarter
           </h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md mx-auto mb-8">
@@ -102,7 +103,7 @@ const Urgency: React.FC<UrgencyProps> = ({ onNavigate }) => {
           
           <motion.button
             onClick={handleUrgencyCTA}
-            className="bg-canvas-navy text-amber-cta px-8 py-4 rounded-full font-inter font-bold text-lg hover:bg-amber-cta hover:text-canvas-navy border-2 border-canvas-navy hover:border-amber-cta transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2 mx-auto"
+           className="bg-canvas-navy text-primary-purple px-8 py-4 rounded-full font-inter font-bold text-lg hover:bg-primary-purple hover:text-canvas-navy border-2 border-canvas-navy hover:border-primary-purple transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2 mx-auto"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

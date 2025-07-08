@@ -1,71 +1,56 @@
 import React from 'react';
-import { Bot, Shield, Globe, FileCheck } from 'lucide-react';
+import { Bot } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-elevated-card py-12 border-t border-neutral-stroke">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-8">
-          <div className="md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <Bot className="w-8 h-8 text-amber-cta" />
+    <footer className="bg-elevated-card py-16 border-t border-neutral-stroke relative overflow-hidden">
+      {/* Large outlined text background */}
+      <div className="absolute inset-0 flex items-end justify-center pointer-events-none pb-8">
+        <div className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-inter font-black text-transparent select-none opacity-40"
+             style={{
+               WebkitTextStroke: '3px rgba(107, 70, 193, 0.6)',
+               textStroke: '3px rgba(107, 70, 193, 0.6)',
+               lineHeight: '0.8'
+             }}>
+          BuddyBots
+        </div>
+      </div>
+      
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div className="text-center">
+          <div className="mb-8">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <Bot className="w-8 h-8 text-primary-purple" />
               <span className="text-primary-text font-inter font-bold text-xl">
                 BuddyBots.ai
               </span>
             </div>
             
-            <p className="text-body-text font-inter mb-6">
+            <p className="text-body-text font-inter text-lg mb-8 max-w-2xl mx-auto">
               Transforming operations with AI-powered automation that delivers measurable ROI in weeks, not months.
             </p>
-            
-            <div className="text-body-text font-inter text-sm">
-              <p>123 Innovation Drive, Suite 400</p>
-              <p>Tech City, TC 12345</p>
-              <p>United States</p>
-            </div>
           </div>
           
-          <div>
-            <h3 className="text-primary-text font-inter font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-body-text hover:text-cyan-interactive font-inter text-sm transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-body-text hover:text-cyan-interactive font-inter text-sm transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-body-text hover:text-cyan-interactive font-inter text-sm transition-colors">
-                  Cookie Policy
-                </a>
-              </li>
-            </ul>
+          {/* Chatbase-style text */}
+          <div className="mb-8">
+            <p className="text-body-text font-inter text-base leading-relaxed max-w-4xl mx-auto">
+              We help businesses automate their operations with AI solutions that actually work. 
+              Our proven 6-week transformation sprint delivers measurable ROI through strategic AI implementation. 
+              Join 150+ companies who've already transformed their workflows and cut costs by 30% or more.
+            </p>
           </div>
           
-          <div>
-            <h3 className="text-primary-text font-inter font-semibold mb-4">Compliance</h3>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2">
-                <Shield className="w-4 h-4 text-body-text" />
-                <span className="text-body-text font-inter text-sm">ISO 27001</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Globe className="w-4 h-4 text-body-text" />
-                <span className="text-body-text font-inter text-sm">GDPR Compliant</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <FileCheck className="w-4 h-4 text-body-text" />
-                <span className="text-body-text font-inter text-sm">SOC 2 Pending</span>
-              </div>
-            </div>
+          {/* Contact info */}
+          <div className="mb-8">
+            <p className="text-body-text font-inter text-sm">
+              Questions? Reach out at{' '}
+              <a href="mailto:hello@buddybots.ai" className="text-primary-purple hover:text-primary-magenta transition-colors">
+                hello@buddybots.ai
+              </a>
+            </p>
           </div>
-        </div>
-        
-        <div className="border-t border-neutral-stroke mt-8 pt-8 text-center">
+          
+          {/* Copyright */}
           <p className="text-body-text font-inter text-sm">
             © 2025 BuddyBots.ai. All rights reserved.
           </p>

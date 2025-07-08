@@ -120,7 +120,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
             </div>
             <button
               onClick={onBack}
-              className="bg-amber-cta text-canvas-navy px-8 py-3 rounded-full font-inter font-bold hover:bg-canvas-navy hover:text-amber-cta border-2 border-transparent hover:border-amber-cta transition-all duration-200"
+              className="bg-primary-purple text-primary-text px-8 py-3 rounded-full font-inter font-bold hover:bg-primary-magenta hover:text-primary-text border-2 border-transparent hover:border-primary-magenta transition-all duration-200"
             >
               Return to Home
             </button>
@@ -291,7 +291,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
                       value={formData.employees}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 bg-secondary-bg border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-primary-purple focus:outline-none transition-colors"
                     >
                       <option value="">Select Employee Range</option>
                       {employeeRanges.map((range) => (
@@ -317,7 +317,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
                     value={formData.urgency}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-canvas-navy border border-neutral-stroke rounded-lg text-primary-text font-inter focus:border-cyan-interactive focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-secondary-bg border border-neutral-stroke rounded-lg text-primary-text placeholder-body-text font-inter focus:border-primary-purple focus:outline-none transition-colors"
                   >
                     <option value="">Select Timeline</option>
                     {urgencyLevels.map((level) => (
@@ -360,7 +360,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
             <div className="mt-8 pt-6 border-t border-neutral-stroke">
               <button
                 type="submit"
-                className="w-full bg-amber-cta text-canvas-navy px-8 py-4 rounded-full font-inter font-bold text-lg hover:bg-canvas-navy hover:text-amber-cta border-2 border-transparent hover:border-amber-cta transition-all duration-200 flex items-center justify-center space-x-2"
+                className="w-full bg-primary-purple text-primary-text px-8 py-4 rounded-full font-inter font-bold text-lg hover:bg-primary-magenta hover:text-primary-text border-2 border-transparent hover:border-primary-magenta transition-all duration-200 flex items-center justify-center space-x-2"
               >
                 <Send className="w-5 h-5" />
                 <span>Get My Free ROI Assessment</span>

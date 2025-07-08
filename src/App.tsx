@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import Services from './components/Services';
 import Pain from './components/Pain';
-import SolutionBridge from './components/SolutionBridge';
-import Solution from './components/Solution';
-import USP from './components/USP';
-import CaseStudy from './components/CaseStudy';
-import Roadmap from './components/Roadmap';
+import TransformationJourney from './components/TransformationJourney';
+import About from './components/About';
+// import SolutionBridge from './components/SolutionBridge';
+// import Solution from './components/Solution';
+// import USP from './components/USP';
+// import CaseStudy from './components/CaseStudy';
+// import Roadmap from './components/Roadmap';
 import FAQ from './components/FAQ';
 import Guarantee from './components/Guarantee';
 import Urgency from './components/Urgency';
@@ -23,14 +26,42 @@ type PageType = 'home' | 'roi-calculator' | 'strategy-call' | 'contact';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
+  const [formData, setFormData] = useState<any>(null);
 
-  const navigateToPage = (page: PageType) => {
+  // Listen for custom navigation events
+  React.useEffect(() => {
+    const handleNavigateToStrategyCall = () => {
+      navigateToPage('strategy-call');
+    };
+
+    window.addEventListener('navigate-to-strategy-call', handleNavigateToStrategyCall);
+    
+    return () => {
+      window.removeEventListener('navigate-to-strategy-call', handleNavigateToStrategyCall);
+    };
+  }, []);
+
+  const navigateToPage = (page: PageType, data?: any) => {
     setCurrentPage(page);
+    if (data) setFormData(data);
     window.scrollTo(0, 0);
   };
 
+  // Listen for hero form data
+  React.useEffect(() => {
+    const handleHeroFormData = (event: any) => {
+      setFormData(event.detail);
+    };
+
+    window.addEventListener('hero-form-data', handleHeroFormData);
+    
+    return () => {
+      window.removeEventListener('hero-form-data', handleHeroFormData);
+    };
+  }, []);
   const navigateHome = () => {
     setCurrentPage('home');
+    setFormData(null);
     window.scrollTo(0, 0);
   };
 
@@ -39,7 +70,7 @@ function App() {
   }
 
   if (currentPage === 'strategy-call') {
-    return <StrategyCall onBack={navigateHome} />;
+    return <StrategyCall onBack={navigateHome} prefillData={formData} />;
   }
 
   if (currentPage === 'contact') {
@@ -50,12 +81,15 @@ function App() {
     <div className="font-inter bg-canvas-navy">
       <Header onNavigate={navigateToPage} />
       <Hero onNavigate={navigateToPage} />
+      <Services />
       <Pain />
-      <SolutionBridge />
-      <Solution />
-      <USP />
-      <CaseStudy />
-      <Roadmap />
+      <TransformationJourney />
+      <About />
+      {/* <SolutionBridge /> */}
+      {/* <Solution /> */}
+      {/* <USP /> */}
+      {/* <CaseStudy /> */}
+      {/* <Roadmap /> */}
       <FAQ />
       <Guarantee />
       <Urgency />

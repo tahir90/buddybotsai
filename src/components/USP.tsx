@@ -64,7 +64,7 @@ const USP: React.FC = () => {
                   viewport={{ once: true }}
                   className="flex items-center justify-center space-x-3 bg-elevated-card rounded-lg p-6 border border-neutral-stroke"
                 >
-                  <IconComponent className="w-6 h-6 text-amber-cta flex-shrink-0" />
+                  <IconComponent className="w-6 h-6 text-primary-purple flex-shrink-0" />
                   <span className="text-primary-text font-inter text-lg font-medium">{step.text}</span>
                 </motion.div>
               );
@@ -89,7 +89,7 @@ const USP: React.FC = () => {
                 <thead>
                   <tr className="bg-canvas-navy border-b border-neutral-stroke">
                     <th className="text-left p-6 text-body-text font-inter font-semibold text-lg">Feature</th>
-                    <th className="text-center p-6 text-amber-cta font-inter font-semibold text-lg">BuddyBots Sprint</th>
+                    <th className="text-center p-6 text-primary-purple font-inter font-semibold text-lg">BuddyBots Sprint</th>
                     <th className="text-center p-6 text-body-text font-inter font-semibold text-lg">Traditional IT</th>
                     <th className="text-center p-6 text-body-text font-inter font-semibold text-lg">Big Consultants</th>
                   </tr>
@@ -99,7 +99,7 @@ const USP: React.FC = () => {
                     <tr key={index} className={index % 2 === 0 ? 'bg-elevated-card' : 'bg-canvas-navy'}>
                       <td className="p-6 text-primary-text font-inter font-medium border-b border-neutral-stroke text-lg">{row.feature}</td>
                       <td className="p-6 text-center border-b border-neutral-stroke">
-                        <span className="bg-amber-cta text-canvas-navy px-4 py-2 rounded-full font-inter font-bold text-sm">
+                        <span className="bg-primary-purple text-primary-text px-4 py-2 rounded-full font-inter font-bold text-sm">
                           {row.us}
                         </span>
                       </td>

@@ -34,7 +34,7 @@ const CaseStudy: React.FC = () => {
           
           <div className="grid md:grid-cols-3 gap-8 items-center relative z-10">
             <div className="md:col-span-2">
-              <h3 className="text-amber-cta font-inter font-bold text-2xl md:text-3xl mb-4">
+              <h3 className="text-primary-purple font-inter font-bold text-2xl md:text-3xl mb-4">
                 $402K Annual Savings in 57 Days
               </h3>
               
@@ -44,14 +44,14 @@ const CaseStudy: React.FC = () => {
               
               <button
                 onClick={handleModalToggle}
-                className="bg-ai-glow-gradient text-primary-text px-6 py-3 rounded-full font-inter font-bold hover:opacity-90 transition-opacity duration-200"
+                className="bg-ai-glow-gradient text-primary-text px-6 py-3 rounded-full font-inter font-bold hover:opacity-90 transition-opacity duration-200 animate-glow"
               >
                 Show Me the Full Breakdown
               </button>
             </div>
             
             <div className="flex justify-center">
-              <div className="bg-amber-cta text-canvas-navy w-24 h-24 rounded-full flex items-center justify-center">
+              <div className="bg-primary-magenta text-primary-text w-24 h-24 rounded-full flex items-center justify-center animate-pulse-magenta">
                 <div className="text-center">
                   <TrendingDown className="w-8 h-8 mx-auto mb-1" />
                   <div className="font-inter font-bold text-sm">-22%</div>
@@ -93,12 +93,12 @@ const CaseStudy: React.FC = () => {
               
               <div className="space-y-4 text-body-text font-inter">
                 <div>
-                  <h4 className="text-amber-cta font-semibold mb-2">Challenge:</h4>
+                  <h4 className="text-primary-purple font-semibold mb-2">Challenge:</h4>
                   <p>600-employee manufacturing company losing $50K monthly to inventory discrepancies and manual processes.</p>
                 </div>
                 
                 <div>
-                  <h4 className="text-amber-cta font-semibold mb-2">Solution Deployed:</h4>
+                  <h4 className="text-primary-purple font-semibold mb-2">Solution Deployed:</h4>
                   <ul className="list-disc list-inside space-y-1 ml-4">
                     <li>AI-powered inventory reconciliation system</li>
                     <li>Automated vendor invoice matching</li>
@@ -108,7 +108,7 @@ const CaseStudy: React.FC = () => {
                 </div>
                 
                 <div>
-                  <h4 className="text-amber-cta font-semibold mb-2">Results:</h4>
+                  <h4 className="text-primary-purple font-semibold mb-2">Results:</h4>
                   <ul className="list-disc list-inside space-y-1 ml-4">
                     <li>$402K annual savings verified</li>
                     <li>40% faster order fulfillment</li>

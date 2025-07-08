@@ -4,10 +4,10 @@ import { AlertTriangle } from 'lucide-react';
 
 const Pain: React.FC = () => {
   const painPoints = [
-    'Inventory mis-sync draining cash flow',
-    'Ticket triage eating productivity',
-    'Spreadsheet chaos killing accuracy',
-    'Vendor over-billing bleeding profits'
+    'Sales team is losing leads due to manual CRM updates',
+    'Every missed call = missed opportunity & revenue loss',
+    'Hiring bottlenecks are slowing down team expansion and delivery',
+    'Marketing teams are guessing instead of acting on real-time data'
   ];
 
   return (
