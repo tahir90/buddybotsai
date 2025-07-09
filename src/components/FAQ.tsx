@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
+import SmartTooltip from './SmartTooltip';
 
 const FAQ: React.FC = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   const faqs = [
     {
-      question: "What if we don't see $250K in savings potential?",
-      answer: "We only engage with companies where we can identify minimum $250K annual savings in the discovery phase. If we can't find that potential, we'll refer you to more suitable solutions at no charge."
+      question: "What if we don't see significant savings potential?",
+      answer: "We only engage with companies where we can identify substantial annual savings opportunities in the discovery phase. If we can't find meaningful potential, we'll refer you to more suitable solutions at no charge."
     },
     {
       question: "Will this disrupt our current operations?",
@@ -29,7 +30,7 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="bg-canvas-navy py-20">
+    <section id="faq" className="bg-canvas-navy py-20" role="region" aria-labelledby="faq-heading">
       <div className="max-w-4xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -38,7 +39,7 @@ const FAQ: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-primary-text font-inter font-bold text-3xl md:text-4xl mb-4">
+          <h2 id="faq-heading" className="text-primary-text font-inter font-bold text-3xl md:text-4xl mb-4">
             Frequently Asked Questions
           </h2>
         </motion.div>
@@ -52,19 +53,29 @@ const FAQ: React.FC = () => {
               transition={{ duration: 0.4, delay: index * 0.1 }}
               viewport={{ once: true }}
               className="bg-elevated-card rounded-lg overflow-hidden border border-neutral-stroke"
+              itemScope
+              itemType="https://schema.org/Question"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full text-left p-6 flex justify-between items-center hover:bg-canvas-navy transition-colors duration-200"
+                className="w-full text-left p-6 flex justify-between items-center hover:bg-canvas-navy transition-colors duration-200 group"
+                aria-expanded={openFAQ === index}
+                aria-controls={`faq-answer-${index}`}
               >
-                <span className="text-primary-text font-inter font-semibold text-lg pr-4">
-                  {faq.question}
-                </span>
+                <SmartTooltip
+                  content="Click to expand this frequently asked question"
+                  aiInsight="Our AI-powered FAQ system provides instant, contextual answers"
+                  type="tip"
+                >
+                  <span className="text-primary-text font-inter font-semibold text-lg pr-4 group-hover:text-primary-purple transition-colors duration-200" itemProp="name">
+                    {faq.question}
+                  </span>
+                </SmartTooltip>
                 <div className="flex-shrink-0">
                   {openFAQ === index ? (
-                    <Minus className="w-6 h-6 text-primary-magenta" />
+                    <Minus className="w-6 h-6 text-primary-magenta group-hover:scale-110 transition-transform duration-200" aria-hidden="true" />
                   ) : (
-                    <Plus className="w-6 h-6 text-primary-magenta" />
+                    <Plus className="w-6 h-6 text-primary-magenta group-hover:scale-110 transition-transform duration-200" aria-hidden="true" />
                   )}
                 </div>
               </button>
@@ -76,9 +87,12 @@ const FAQ: React.FC = () => {
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
+                    id={`faq-answer-${index}`}
+                    itemScope
+                    itemType="https://schema.org/Answer"
                   >
                     <div className="px-6 pb-6">
-                      <p className="text-body-text font-inter leading-relaxed">
+                      <p className="text-body-text font-inter leading-relaxed" itemProp="text">
                         {faq.answer}
                       </p>
                     </div>

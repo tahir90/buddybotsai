@@ -11,7 +11,7 @@ const Pain: React.FC = () => {
   ];
 
   return (
-    <section id="pain" className="bg-canvas-navy py-20">
+    <section id="pain" className="bg-canvas-navy py-20" role="region" aria-labelledby="pain-heading">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
@@ -20,7 +20,7 @@ const Pain: React.FC = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-primary-text font-inter font-bold text-3xl md:text-4xl mb-8">
+            <h2 id="pain-heading" className="text-primary-text font-inter font-bold text-3xl md:text-4xl mb-8">
               Every Manual Process Is Costing You—Twice.
             </h2>
             
@@ -34,7 +34,7 @@ const Pain: React.FC = () => {
                   viewport={{ once: true }}
                   className="flex items-center space-x-3"
                 >
-                  <AlertTriangle className="w-6 h-6 text-warning-red flex-shrink-0" />
+                  <AlertTriangle className="w-6 h-6 text-warning-red flex-shrink-0" aria-hidden="true" />
                   <span className="text-body-text font-inter text-lg">{pain}</span>
                 </motion.div>
               ))}
@@ -55,10 +55,10 @@ const Pain: React.FC = () => {
             <div className="bg-elevated-card rounded-xl p-12 shadow-xl border border-neutral-stroke">
               <div className="text-center">
                 <div className="text-6xl mb-4">📊</div>
-                <h3 className="text-primary-text font-inter font-bold text-xl mb-2">
+                <h3 className="text-primary-text font-inter font-bold text-xl mb-2" itemProp="name">
                   Hidden Cost Leaks
                 </h3>
-                <p className="text-body-text font-inter">
+                <p className="text-body-text font-inter" itemProp="description">
                   Every manual process costs you twice: once in execution, again in missed opportunities.
                 </p>
               </div>

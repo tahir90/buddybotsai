@@ -16,17 +16,24 @@ import Urgency from './components/Urgency';
 import Testimonials from './components/Testimonials';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
-
-// Import pages
 import ROICalculator from './pages/ROICalculator';
 import StrategyCall from './pages/StrategyCall';
 import ContactForm from './pages/ContactForm';
 
 type PageType = 'home' | 'roi-calculator' | 'strategy-call' | 'contact';
 
-function App() {
+const App = ({ onNavigate }: {
+  onNavigate: (page: 'home' | 'roi-calculator' | 'strategy-call' | 'contact', data?: any) => void;
+}) => {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [formData, setFormData] = useState<any>(null);
+
+  const navigateToPage = (page: PageType, data?: any) => {
+    // Set form data first if provided
+    if (data) setFormData(data);
+    setCurrentPage(page);
+    window.scrollTo(0, 0);
+  };
 
   // Listen for custom navigation events
   React.useEffect(() => {
@@ -41,12 +48,6 @@ function App() {
     };
   }, []);
 
-  const navigateToPage = (page: PageType, data?: any) => {
-    setCurrentPage(page);
-    if (data) setFormData(data);
-    window.scrollTo(0, 0);
-  };
-
   // Listen for hero form data
   React.useEffect(() => {
     const handleHeroFormData = (event: any) => {
@@ -59,6 +60,7 @@ function App() {
       window.removeEventListener('hero-form-data', handleHeroFormData);
     };
   }, []);
+
   const navigateHome = () => {
     setCurrentPage('home');
     setFormData(null);
@@ -98,6 +100,6 @@ function App() {
       <Footer />
     </div>
   );
-}
+};
 
 export default App;

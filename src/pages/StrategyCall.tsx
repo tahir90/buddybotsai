@@ -63,12 +63,12 @@ const StrategyCall: React.FC<StrategyCallProps> = ({ onBack, prefillData }) => {
       };
       
       // Add prefill data if available
-      ${prefillData?.name ? `config.name = "${prefillData.name}";` : ''}
-      ${prefillData?.email ? `config.email = "${prefillData.email}";` : ''}
-      ${prefillData?.phone ? `config.attendeePhoneNumber = "${prefillData.phone}";` : ''}
-      ${prefillData?.company ? `config.CompanyName = "${prefillData.company}";` : ''}
-      ${prefillData?.industry ? `config.industry = "${prefillData.industry}";` : ''}
-      ${prefillData?.annualRevenue ? `config["Annual-Revenue"] = "${prefillData.annualRevenue}";` : ''}
+      ${prefillData?.name ? `config.name = ${JSON.stringify(prefillData.name)};` : ''}
+      ${prefillData?.email ? `config.email = ${JSON.stringify(prefillData.email)};` : ''}
+      ${prefillData?.phone ? `config.attendeePhoneNumber = ${JSON.stringify(prefillData.phone)};` : ''}
+      ${prefillData?.company ? `config.CompanyName = ${JSON.stringify(prefillData.company)};` : ''}
+      ${prefillData?.industry ? `config.industry = ${JSON.stringify(prefillData.industry)};` : ''}
+      ${prefillData?.annualRevenue ? `config["Annual-Revenue"] = ${JSON.stringify(prefillData.annualRevenue)};` : ''}
       Cal.ns["30min"]("inline", {
         elementOrSelector:"#my-cal-inline-30min",
         config: config,
@@ -195,7 +195,7 @@ const StrategyCall: React.FC<StrategyCallProps> = ({ onBack, prefillData }) => {
                 <ul className="space-y-3">
                   <li className="flex items-center space-x-3">
                     <CheckCircle className="w-4 h-4 text-success-green flex-shrink-0" />
-                    <span className="text-body-text font-inter text-sm">150+ successful AI transformations</span>
+                    <span className="text-body-text font-inter text-sm">47+ successful AI transformations</span>
                   </li>
                   <li className="flex items-center space-x-3">
                     <CheckCircle className="w-4 h-4 text-success-green flex-shrink-0" />

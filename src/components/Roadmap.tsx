@@ -55,7 +55,7 @@ const Roadmap: React.FC = () => {
             className="absolute top-[0px] left-[calc(50%+220px)] hidden md:block z-10"
           >
             <img
-              src="./blueprint.png"
+              src="/blueprint.png"
               alt="Roadmap Buddy - Structured guidance reinforcement"
               className="drop-shadow-lg transform scale-x-[-1]"
               style={{ width: '140px', height: '160px' }}

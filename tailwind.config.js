@@ -27,7 +27,7 @@ export default {
         
         // Interactive Colors
         'cyan-interactive': '#6B46C1',
-        'amber-cta': '#6B46C1',
+        'amber-cta': '#FFC400',
         'amber-500': '#FCD34D',
         'cyan-400': '#22D3EE',
         

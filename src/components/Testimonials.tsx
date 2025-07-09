@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DollarSign, Clock, TrendingUp, Star } from 'lucide-react';
+import SmartTooltip from './SmartTooltip';
 
 const Testimonials: React.FC = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -10,7 +11,7 @@ const Testimonials: React.FC = () => {
       name: "Sarah Chen",
       role: "CEO",
       company: "TechFlow Manufacturing",
-      quote: "TransformAI reduced our operational costs by 35% in just 8 weeks. We eliminated 240 hours of manual work per week and reinvested that time into strategic growth initiatives.",
+      quote: "BuddyBots.ai reduced our operational costs by 35% in just 8 weeks. We eliminated 240 hours of manual work per week and reinvested that time into strategic growth initiatives.",
       metrics: [
         { icon: DollarSign, value: "35%", label: "Cost Reduction", color: "text-success-green" },
         { icon: Clock, value: "240hrs/week", label: "Time Saved", color: "text-amber-500" },
@@ -53,7 +54,7 @@ const Testimonials: React.FC = () => {
   const currentData = testimonials[currentTestimonial];
 
   return (
-    <section id="social" className="bg-canvas-navy py-20">
+    <section id="social" className="bg-canvas-navy py-20" role="region" aria-labelledby="testimonials-heading">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -62,12 +63,12 @@ const Testimonials: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-primary-text font-inter font-bold text-3xl md:text-4xl mb-4">
+          <h2 id="testimonials-heading" className="text-primary-text font-inter font-bold text-3xl md:text-4xl mb-4">
             What Our Clients Say
           </h2>
         </motion.div>
 
-        <div className="bg-elevated-card rounded-2xl border border-neutral-stroke relative overflow-hidden">
+        <div className="bg-elevated-card rounded-2xl border border-neutral-stroke relative overflow-hidden" itemScope itemType="https://schema.org/Review">
           {/* Background decoration */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-ai-glow-gradient opacity-10 rounded-full transform translate-x-16 -translate-y-16"></div>
           
@@ -83,12 +84,12 @@ const Testimonials: React.FC = () => {
               {/* Stars */}
               <div className="flex justify-center mb-6">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 text-amber-cta fill-current" />
+                  <Star key={i} className="w-6 h-6 text-amber-cta fill-current" aria-hidden="true" />
                 ))}
               </div>
               
               {/* Quote */}
-              <blockquote className="text-primary-text font-inter text-lg md:text-xl leading-relaxed mb-8 max-w-4xl mx-auto text-center">
+              <blockquote className="text-primary-text font-inter text-lg md:text-xl leading-relaxed mb-8 max-w-4xl mx-auto text-center" itemProp="reviewBody">
                 "{currentData.quote}"
               </blockquote>
               
@@ -104,12 +105,24 @@ const Testimonials: React.FC = () => {
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                       className="text-center"
                     >
-                      <div className={`w-16 h-16 ${metric.color.replace('text-', 'bg-')} bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3`}>
-                        <IconComponent className={`w-8 h-8 ${metric.color}`} />
+                      <div className={`w-16 h-16 ${metric.color.replace('text-', 'bg-')} bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3`} role="img" aria-label={metric.label}>
+                        <SmartTooltip
+                          content={`${metric.label}: ${metric.value}`}
+                          aiInsight={`This metric represents ${metric.label.toLowerCase()} achieved through our AI transformation process`}
+                          type="insight"
+                        >
+                          <IconComponent className={`w-8 h-8 ${metric.color} hover:scale-110 transition-transform duration-300 cursor-pointer`} aria-hidden="true" />
+                        </SmartTooltip>
                       </div>
-                      <div className={`${metric.color} font-inter font-bold text-2xl mb-1`}>
+                      <motion.div
+                        key={`${currentTestimonial}-${index}`}
+                        initial={{ scale: 1.2, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        className={`${metric.color} font-inter font-bold text-2xl mb-1`}
+                      >
                         {metric.value}
-                      </div>
+                      </motion.div>
                       <div className="text-body-text font-inter text-sm">
                         {metric.label}
                       </div>
@@ -121,16 +134,16 @@ const Testimonials: React.FC = () => {
               {/* Client info - redesigned layout */}
               <div className="text-center">
                 <div className="inline-flex items-center justify-center space-x-4 bg-canvas-navy rounded-full px-8 py-4 border border-neutral-stroke">
-                  <div className="w-12 h-12 bg-ai-glow-gradient rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-ai-glow-gradient rounded-full flex items-center justify-center" role="img" aria-label={`${currentData.name} avatar`}>
                     <span className="text-primary-text font-inter font-bold text-lg">
                       {currentData.name.split(' ').map(n => n[0]).join('')}
                     </span>
                   </div>
-                  <div className="text-left">
-                    <div className="text-primary-text font-inter font-bold text-lg">
+                  <div className="text-left" itemScope itemType="https://schema.org/Person">
+                    <div className="text-primary-text font-inter font-bold text-lg" itemProp="name">
                       {currentData.name}
                     </div>
-                    <div className="text-primary-purple font-inter font-medium text-sm">
+                    <div className="text-primary-purple font-inter font-medium text-sm" itemProp="jobTitle">
                       {currentData.role}, {currentData.company}
                     </div>
                   </div>
@@ -140,7 +153,7 @@ const Testimonials: React.FC = () => {
           </AnimatePresence>
           
           {/* Dots indicator */}
-          <div className="flex justify-center space-x-2 pb-6">
+          <div className="flex justify-center space-x-2 pb-6" role="tablist" aria-label="Testimonial navigation">
             {testimonials.map((_, index) => (
               <button
                 key={index}
@@ -150,6 +163,9 @@ const Testimonials: React.FC = () => {
                     ? 'bg-success-green scale-125' 
                     : 'bg-neutral-stroke hover:bg-success-green hover:scale-110'
                 }`}
+                role="tab"
+                aria-selected={index === currentTestimonial}
+                aria-label={`View testimonial ${index + 1}`}
               />
             ))}
           </div>

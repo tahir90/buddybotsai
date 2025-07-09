@@ -59,7 +59,7 @@ const Urgency: React.FC<UrgencyProps> = ({ onNavigate }) => {
   };
 
   return (
-    <section id="urgency" className="bg-ai-glow-gradient py-16">
+    <section id="urgency" className="bg-ai-glow-gradient py-16" role="region" aria-labelledby="urgency-heading">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -67,11 +67,11 @@ const Urgency: React.FC<UrgencyProps> = ({ onNavigate }) => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-canvas-navy font-inter font-bold text-3xl md:text-4xl mb-8">
+          <h2 id="urgency-heading" className="text-canvas-navy font-inter font-bold text-3xl md:text-4xl mb-8">
             Only 4 Strategy Call Slots Left This Quarter
           </h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md mx-auto mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md mx-auto mb-8" role="timer" aria-label="Countdown timer for strategy call slots">
             <div className="bg-canvas-navy rounded-lg p-4 border border-neutral-stroke">
               <div className="text-primary-text font-inter font-bold text-2xl md:text-3xl">
                 {timeLeft.days.toString().padStart(2, '0')}
@@ -106,8 +106,9 @@ const Urgency: React.FC<UrgencyProps> = ({ onNavigate }) => {
            className="bg-canvas-navy text-primary-purple px-8 py-4 rounded-full font-inter font-bold text-lg hover:bg-primary-purple hover:text-canvas-navy border-2 border-canvas-navy hover:border-primary-purple transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2 mx-auto"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            aria-label="Reserve strategy call slot for AI transformation consultation"
           >
-            <Calendar className="w-5 h-5" />
+            <Calendar className="w-5 h-5" aria-hidden="true" />
             <span>Reserve My Sprint Slot</span>
           </motion.button>
           

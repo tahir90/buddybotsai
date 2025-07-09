@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mic, BarChart3, Target, Users, Search, Zap } from 'lucide-react';
+import InteractiveDemo from './InteractiveDemo';
+import SmartTooltip from './SmartTooltip';
 
 const Services: React.FC = () => {
   const services = [
@@ -55,7 +57,7 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <section id="services" className="bg-canvas-navy py-20 relative overflow-hidden">
+    <section id="services" className="bg-canvas-navy py-20 relative overflow-hidden" role="region" aria-labelledby="services-heading">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-circuit-pattern opacity-30"></div>
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-ai-glow-gradient opacity-10 rounded-full blur-3xl"></div>
@@ -69,7 +71,7 @@ const Services: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-primary-text font-inter font-bold text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight">
+          <h2 id="services-heading" className="text-primary-text font-inter font-bold text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight">
             We Don't Just Talk AI—
             <br />
             <span className="bg-ai-glow-gradient bg-clip-text text-transparent">
@@ -87,44 +89,72 @@ const Services: React.FC = () => {
             const IconComponent = service.icon;
             
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-elevated-card rounded-xl p-8 border border-neutral-stroke hover:border-primary-purple transition-all duration-300 group hover:transform hover:scale-105 relative overflow-hidden"
-              >
-                {/* Card background glow effect */}
-                <div className="absolute inset-0 bg-ai-glow-gradient opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-xl"></div>
-                
-                <div className="relative z-10">
-                  {/* Icon */}
-                  <div className={`w-16 h-16 ${service.bgColor} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className={`w-8 h-8 ${service.color}`} />
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-elevated-card rounded-xl p-8 border border-neutral-stroke hover:border-primary-purple transition-all duration-300 group hover:transform hover:scale-105 relative overflow-hidden cursor-pointer"
+                >
+                  {/* Card background glow effect */}
+                  <div className="absolute inset-0 bg-ai-glow-gradient opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-xl"></div>
+                  
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                   </div>
                   
-                  {/* Title */}
-                  <h3 className="text-primary-text font-inter font-bold text-xl mb-4 group-hover:text-primary-purple transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  
-                  {/* Description */}
-                  <p className="text-body-text font-inter text-base leading-relaxed mb-6">
-                    {service.description}
-                  </p>
-                  
-                  {/* Benefit Badge */}
-                  <div className="inline-flex items-center px-4 py-2 rounded-full border border-solid" style={{ borderColor: '#E4E7EB' }}>
-                    <span className={`${service.color} font-inter font-semibold text-sm`}>
-                      {service.benefit}
-                    </span>
+                  <div className="relative z-10">
+                    {/* Icon with pulse effect */}
+                    <div className={`w-16 h-16 ${service.bgColor} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 relative`}>
+                      <IconComponent className={`w-8 h-8 ${service.color}`} aria-hidden="true" />
+                      <div className={`absolute inset-0 ${service.bgColor} rounded-xl opacity-0 group-hover:opacity-30 animate-ping`}></div>
+                    </div>
+                    
+                    {/* Title */}
+                    <h3 className="text-primary-text font-inter font-bold text-xl mb-4 group-hover:text-primary-purple transition-colors duration-300" itemProp="name">
+                      {service.title}
+                    </h3>
+                    
+                    {/* Description */}
+                    <p className="text-body-text font-inter text-base leading-relaxed mb-6" itemProp="description">
+                      {service.description}
+                    </p>
+                    
+                    {/* Enhanced Benefit Badge */}
+                    <div className="inline-flex items-center px-4 py-2 rounded-full border border-solid bg-gradient-to-r from-transparent to-transparent group-hover:from-primary-purple group-hover:to-primary-magenta group-hover:bg-opacity-10 transition-all duration-300" style={{ borderColor: '#E4E7EB' }}>
+                      <span className={`${service.color} font-inter font-semibold text-sm group-hover:text-primary-text transition-colors duration-300`}>
+                        {service.benefit}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
             );
           })}
         </div>
+
+        {/* Interactive Demo Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          viewport={{ once: true }}
+          className="mt-16"
+        >
+          <div className="text-center mb-8">
+            <h3 className="text-primary-text font-inter font-bold text-2xl md:text-3xl mb-4">
+              See AI Transformation in Action
+            </h3>
+            <p className="text-body-text font-inter text-lg max-w-2xl mx-auto">
+              Watch our proven process transform your operations step by step
+            </p>
+          </div>
+          
+          <div className="max-w-2xl mx-auto">
+            <InteractiveDemo />
+          </div>
+        </motion.div>
 
         {/* Bottom CTA */}
         <motion.div
@@ -142,7 +172,7 @@ const Services: React.FC = () => {
                 Ready to Automate Your Success?
               </h3>
               
-              <p className="text-body-text font-inter text-lg mb-8 max-w-2xl mx-auto">
+              <p className="text-body-text font-inter text-lg mb-8 max-w-2xl mx-auto" itemProp="description">
                 Each solution is custom-built for your business, deployed in weeks, and guaranteed to deliver measurable ROI within 90 days.
               </p>
               
@@ -162,6 +192,7 @@ const Services: React.FC = () => {
                     window.dispatchEvent(event);
                   }}
                   className="bg-primary-purple text-primary-text px-8 py-4 rounded-full font-inter font-bold text-lg hover:bg-primary-magenta hover:text-primary-text border-2 border-transparent hover:border-primary-magenta transform hover:scale-105 transition-all duration-200 animate-glow"
+                  aria-label="Book strategy call to discuss AI automation services"
                 >
                   Book Strategy Call
                 </button>

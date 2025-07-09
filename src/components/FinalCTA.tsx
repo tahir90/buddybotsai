@@ -27,7 +27,7 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
   };
 
   return (
-    <section id="final-cta" className="bg-canvas-navy py-20 relative overflow-hidden">
+    <section id="final-cta" className="bg-canvas-navy py-20 relative overflow-hidden" role="region" aria-labelledby="final-cta-heading">
       <div className="absolute inset-0 bg-ai-glow-gradient opacity-10"></div>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-ai-glow-gradient opacity-20 rounded-full blur-3xl"></div>
       
@@ -39,7 +39,7 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
           viewport={{ once: true }}
         >
           {/* Main Headline */}
-          <h2 className="text-primary-text font-inter font-bold text-3xl md:text-5xl mb-6">
+          <h2 id="final-cta-heading" className="text-primary-text font-inter font-bold text-3xl md:text-5xl mb-6">
             90-Day ROI-or-Free Guarantee
           </h2>
           
@@ -56,7 +56,7 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
             viewport={{ once: true }}
             className="inline-flex items-center space-x-3 bg-elevated-card rounded-full px-8 py-4 border border-success-green mb-8"
           >
-            <Shield className="w-8 h-8 text-success-green" />
+            <Shield className="w-8 h-8 text-success-green" aria-hidden="true" />
             <div className="text-left">
               <div className="text-primary-text font-inter font-bold text-lg">Risk-Free Promise</div>
               <div className="text-success-green font-inter text-sm">90-Day Money-Back Guarantee</div>
@@ -76,7 +76,7 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
                   viewport={{ once: true }}
                   className="flex items-center space-x-2"
                 >
-                  <IconComponent className="w-6 h-6 text-primary-purple" />
+                  <IconComponent className="w-6 h-6 text-primary-purple" aria-hidden="true" />
                   <span className="text-primary-text font-inter text-lg">{benefit.text}</span>
                 </motion.div>
               );
@@ -101,10 +101,12 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
               className="lg:mr-6 flex items-center"
             >
               <img
-                src="./spots.png"
-                alt="Final CTA Bot - Urgency to convert"
+                src="/spots.png"
+                alt="Final call-to-action mascot - BuddyBots.ai conversion assistant"
                 className="drop-shadow-lg"
                 style={{ width: '140px', height: 'auto' }}
+                loading="lazy"
+                width="140"
               />
             </motion.div>
 
@@ -125,6 +127,7 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onNavigate }) => {
               className="bg-primary-purple text-primary-text px-12 py-6 rounded-full font-inter font-bold text-xl hover:bg-primary-magenta hover:text-primary-text border-2 border-transparent hover:border-primary-magenta transform hover:scale-105 transition-all duration-200 animate-glow"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              aria-label="Book strategy call for AI transformation consultation"
             >
               Book My Strategy Call
             </motion.button>

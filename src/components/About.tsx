@@ -17,7 +17,7 @@ const About: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="bg-canvas-navy py-20 relative overflow-hidden">
+    <section id="about" className="bg-canvas-navy py-20 relative overflow-hidden" role="region" aria-labelledby="about-heading">
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-full bg-circuit-pattern opacity-20"></div>
       <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-ai-glow-gradient opacity-15 rounded-full blur-3xl"></div>
@@ -33,7 +33,7 @@ const About: React.FC = () => {
             viewport={{ once: true }}
           >
             {/* Headline */}
-            <h2 className="text-primary-text font-inter font-bold text-3xl md:text-4xl mb-8 leading-tight">
+            <h2 id="about-heading" className="text-primary-text font-inter font-bold text-3xl md:text-4xl mb-8 leading-tight">
               Built by Practitioners Leading{' '}
               <span className="bg-ai-glow-gradient bg-clip-text text-transparent">
                 Real AI Transformation
@@ -57,7 +57,7 @@ const About: React.FC = () => {
             
             {/* Why Growing Teams Choose BuddyBots */}
             <div className="mb-12">
-              <h3 className="text-primary-text font-inter font-bold text-2xl mb-6">
+              <h3 className="text-primary-text font-inter font-bold text-2xl mb-6" itemProp="name">
                 Why Growing Teams Choose BuddyBots
               </h3>
               
@@ -71,7 +71,7 @@ const About: React.FC = () => {
                     viewport={{ once: true }}
                     className="flex items-start space-x-3"
                   >
-                    <CheckCircle className="w-6 h-6 text-success-green flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-6 h-6 text-success-green flex-shrink-0 mt-0.5" aria-hidden="true" />
                     <span className="text-body-text font-inter text-lg">{item}</span>
                   </motion.div>
                 ))}
@@ -94,11 +94,11 @@ const About: React.FC = () => {
                 {/* Team Bot Image */}
                 <div className="text-center mb-6">
                   <div className="w-32 h-32 bg-ai-glow-gradient bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-primary-purple">
-                    <Users className="w-16 h-16 text-primary-purple" />
+                    <Users className="w-16 h-16 text-primary-purple" aria-hidden="true" />
                   </div>
                 </div>
                 
-                <h3 className="text-primary-text font-inter font-bold text-xl mb-4 text-center">
+                <h3 className="text-primary-text font-inter font-bold text-xl mb-4 text-center" itemProp="name">
                   Meet Your AI Transformation Team
                 </h3>
                 
@@ -112,14 +112,14 @@ const About: React.FC = () => {
                 
                 {/* What We Do */}
                 <div className="bg-canvas-navy rounded-lg p-6">
-                  <h4 className="text-primary-purple font-inter font-bold text-lg mb-4 text-center">
+                  <h4 className="text-primary-purple font-inter font-bold text-lg mb-4 text-center" itemProp="name">
                     What We Do:
                   </h4>
                   
                   <div className="space-y-3">
                     {whatWeDo.map((item, index) => (
                       <div key={index} className="flex items-start space-x-3">
-                        <CheckCircle className="w-5 h-5 text-success-green flex-shrink-0 mt-0.5" />
+                        <CheckCircle className="w-5 h-5 text-success-green flex-shrink-0 mt-0.5" aria-hidden="true" />
                         <span className="text-body-text font-inter text-sm">{item}</span>
                       </div>
                     ))}

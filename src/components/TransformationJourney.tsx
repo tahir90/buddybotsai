@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, Target, Cog, HeadphonesIcon, Calendar, CheckCircle } from 'lucide-react';
+import SmartTooltip from './SmartTooltip';
 
 const TransformationJourney: React.FC = () => {
   const journeySteps = [
@@ -59,7 +60,7 @@ const TransformationJourney: React.FC = () => {
   ];
 
   return (
-    <section id="transformation-journey" className="bg-canvas-navy py-20 relative overflow-hidden">
+    <section id="transformation-journey" className="bg-canvas-navy py-20 relative overflow-hidden" role="region" aria-labelledby="journey-heading">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-circuit-pattern opacity-20"></div>
       <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-ai-glow-gradient opacity-10 rounded-full blur-3xl"></div>
@@ -73,7 +74,7 @@ const TransformationJourney: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-primary-text font-inter font-bold text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight">
+          <h2 id="journey-heading" className="text-primary-text font-inter font-bold text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight">
             Your Complete{' '}
             <span className="bg-ai-glow-gradient bg-clip-text text-transparent">
               AI Transformation Journey
@@ -86,19 +87,22 @@ const TransformationJourney: React.FC = () => {
         </motion.div>
 
         <div className="relative">
-          {/* Bot image positioned absolutely relative to timeline */}
+          {/* Bot image positioned next to Week 1 card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
             viewport={{ once: true }}
-            className="absolute top-[0px] left-[calc(50%+220px)] hidden lg:block z-10"
+            className="absolute top-[50px] left-[calc(50%+220px)] hidden lg:block z-10"
           >
             <img
-              src="./blueprint.png"
-              alt="Transformation Journey Guide"
+              src="/blueprint.png"
+              alt="AI transformation roadmap guide - BuddyBots.ai methodology"
               className="drop-shadow-lg transform scale-x-[-1]"
               style={{ width: '140px', height: '160px' }}
+              loading="lazy"
+              width="140"
+              height="160"
             />
           </motion.div>
 
@@ -136,20 +140,27 @@ const TransformationJourney: React.FC = () => {
                         {/* Week badge and icon */}
                         <div className={`flex items-center space-x-3 mb-6 ${
                           'justify-start'
-                        }`}>
-                          <div className={`w-12 h-12 ${step.bgColor} bg-opacity-20 rounded-full flex items-center justify-center border-2 ${step.color.replace('text-', 'border-')}`}>
-                            <IconComponent className={`w-6 h-6 ${step.color}`} />
-                          </div>
+                        }`} itemProp="step">
+                          <SmartTooltip
+                            content={`Week ${index + 1}: ${step.phase}`}
+                            aiInsight={`This phase typically takes ${step.week.toLowerCase()} and focuses on ${step.description.toLowerCase()}`}
+                            type="info"
+                          >
+                            <div className={`w-12 h-12 ${step.bgColor} bg-opacity-20 rounded-full flex items-center justify-center border-2 ${step.color.replace('text-', 'border-')} hover:scale-110 transition-transform duration-300 cursor-pointer relative`}>
+                              <IconComponent className={`w-6 h-6 ${step.color}`} aria-hidden="true" />
+                              <div className={`absolute inset-0 ${step.bgColor} bg-opacity-30 rounded-full opacity-0 hover:opacity-100 animate-ping transition-opacity duration-300`}></div>
+                            </div>
+                          </SmartTooltip>
                           <div>
                             <span className={`${step.color} font-inter font-bold text-lg`}>{step.week}</span>
-                            <div className="text-primary-text font-inter font-bold text-xl">{step.phase}</div>
+                            <div className="text-primary-text font-inter font-bold text-xl" itemProp="name">{step.phase}</div>
                           </div>
                         </div>
 
                         {/* Description */}
                         <p className={`text-body-text font-inter text-lg leading-relaxed mb-6 ${
                           'text-left'
-                        }`}>
+                        }`} itemProp="description">
                           {step.description}
                         </p>
 
@@ -159,7 +170,7 @@ const TransformationJourney: React.FC = () => {
                             <div key={detailIndex} className={`flex items-start space-x-2 ${
                               'justify-start text-left'
                             }`}>
-                              <CheckCircle className="w-4 h-4 text-success-green flex-shrink-0 mt-0.5" />
+                              <CheckCircle className="w-4 h-4 text-success-green flex-shrink-0 mt-0.5" aria-hidden="true" />
                               <span className="text-body-text font-inter text-sm">{detail}</span>
                             </div>
                           ))}
@@ -189,7 +200,7 @@ const TransformationJourney: React.FC = () => {
             
             <div className="relative z-10">
               <div className="flex items-center justify-center space-x-3 mb-4">
-                <Calendar className="w-8 h-8 text-primary-purple" />
+                <Calendar className="w-8 h-8 text-primary-purple" aria-hidden="true" />
                 <h3 className="text-primary-text font-inter font-bold text-2xl md:text-3xl">
                   Ready to Start Your 6-Week Sprint?
                 </h3>
@@ -215,6 +226,7 @@ const TransformationJourney: React.FC = () => {
                     window.dispatchEvent(event);
                   }}
                   className="bg-primary-purple text-primary-text px-8 py-4 rounded-full font-inter font-bold text-lg hover:bg-primary-magenta hover:text-primary-text border-2 border-transparent hover:border-primary-magenta transform hover:scale-105 transition-all duration-200 animate-glow"
+                  aria-label="Book strategy call to start AI transformation journey"
                 >
                   Book Strategy Call
                 </button>
