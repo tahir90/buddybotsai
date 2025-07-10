@@ -142,10 +142,11 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
   // Dynamic words that cycle with smooth transitions
   const dynamicWords = [
-    "Cut operational costs by 30%",
-    "Automate 240+ hours per week",
-    "Deploy Custom AI Solution",
-    "Guarantee measurable ROI"
+    { line1: "Cut operational costs", line2: "by 30%" },
+    { line1: "Increase conversion", line2: "rates by 40%" },
+    { line1: "Automate 120+ hours", line2: "per week" },
+    { line1: "Deploy Specific Custom AI", line2: "Solution" },
+    { line1: "Drive results with", line2: "proven ROI" }
   ];
 
   // Cycle through words every 4 seconds
@@ -241,10 +242,10 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-flex items-center space-x-2 bg-primary-purple bg-opacity-20 rounded-full px-6 py-3 border border-primary-purple border-opacity-50 mb-6"
+                className="inline-flex items-center space-x-2 bg-cyan-400 bg-opacity-15 rounded-full px-6 py-3 border border-cyan-400 border-opacity-70 mb-6"
               >
-                <div className="w-3 h-3 bg-primary-purple rounded-full animate-pulse"></div>
-                <span className="text-primary-purple font-inter font-bold text-sm uppercase tracking-wide">
+                <div className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></div>
+                <span className="text-cyan-400 font-inter font-bold text-sm uppercase tracking-wide">
                   AI Transformation Agency
                 </span>
               </motion.div>
@@ -271,7 +272,8 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                           overflowWrap: 'break-word'
                         }}
                       >
-                        {dynamicWords[currentWordIndex]}
+                        <span className="block">{dynamicWords[currentWordIndex].line1}</span>
+                        <span className="block">{dynamicWords[currentWordIndex].line2}</span>
                       </motion.span>
                     </AnimatePresence>
                   </div>
@@ -340,6 +342,9 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                   alt="Peeking Head Bot - Attention cue toward form"
                   className="w-30 h-25 drop-shadow-lg"
                   style={{ width: '120px', height: '100px' }}
+                  loading="lazy"
+                  width="120"
+                  height="100"
                 />
               </div>
 

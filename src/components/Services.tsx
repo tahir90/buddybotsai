@@ -147,7 +147,7 @@ const Services: React.FC = () => {
               See AI Transformation in Action
             </h3>
             <p className="text-body-text font-inter text-lg max-w-2xl mx-auto">
-              Watch our proven process transform your operations step by step
+              Follow our proven process that reveals insights at every stage and transforms your operations step by step for measurable success.
             </p>
           </div>
           

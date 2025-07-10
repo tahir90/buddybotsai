@@ -59,6 +59,9 @@ const Roadmap: React.FC = () => {
               alt="Roadmap Buddy - Structured guidance reinforcement"
               className="drop-shadow-lg transform scale-x-[-1]"
               style={{ width: '140px', height: '160px' }}
+              loading="lazy"
+              width="140"
+              height="160"
             />
           </motion.div>
 

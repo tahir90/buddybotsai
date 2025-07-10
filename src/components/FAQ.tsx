@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
-import SmartTooltip from './SmartTooltip';
 
 const FAQ: React.FC = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
@@ -62,15 +61,9 @@ const FAQ: React.FC = () => {
                 aria-expanded={openFAQ === index}
                 aria-controls={`faq-answer-${index}`}
               >
-                <SmartTooltip
-                  content="Click to expand this frequently asked question"
-                  aiInsight="Our AI-powered FAQ system provides instant, contextual answers"
-                  type="tip"
-                >
-                  <span className="text-primary-text font-inter font-semibold text-lg pr-4 group-hover:text-primary-purple transition-colors duration-200" itemProp="name">
-                    {faq.question}
-                  </span>
-                </SmartTooltip>
+                <span className="text-primary-text font-inter font-semibold text-lg pr-4 group-hover:text-primary-purple transition-colors duration-200" itemProp="name">
+                  {faq.question}
+                </span>
                 <div className="flex-shrink-0">
                   {openFAQ === index ? (
                     <Minus className="w-6 h-6 text-primary-magenta group-hover:scale-110 transition-transform duration-200" aria-hidden="true" />

@@ -26,6 +26,7 @@ const AIParticles: React.FC<AIParticlesProps> = ({
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
   const animationRef = useRef<number>();
+  const isAnimatingRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -46,10 +47,10 @@ const AIParticles: React.FC<AIParticlesProps> = ({
       return {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * speed,
-        vy: (Math.random() - 0.5) * speed,
+        vx: (Math.random() - 0.5) * speed * 2,
+        vy: (Math.random() - 0.5) * speed * 2,
         size: Math.random() * 3 + 1,
-        opacity: Math.random() * 0.5 + 0.2,
+        opacity: Math.random() * 0.5 + 0.3,
         color: colors[Math.floor(Math.random() * colors.length)],
         type: types[Math.floor(Math.random() * types.length)]
       };
@@ -69,13 +70,11 @@ const AIParticles: React.FC<AIParticlesProps> = ({
 
       switch (particle.type) {
         case 'data':
-          // Draw data node
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
           ctx.fill();
           break;
         case 'neural':
-          // Draw neural connection
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2);
           ctx.fill();
@@ -86,7 +85,6 @@ const AIParticles: React.FC<AIParticlesProps> = ({
           ctx.stroke();
           break;
         case 'spark':
-          // Draw AI spark
           ctx.fillRect(particle.x - particle.size/2, particle.y - particle.size/2, particle.size, particle.size);
           break;
       }
@@ -120,43 +118,62 @@ const AIParticles: React.FC<AIParticlesProps> = ({
       const particles = particlesRef.current;
       
       particles.forEach(particle => {
+        // Apply base movement - this ensures particles always move
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        // Interactive mouse effect
+        // Interactive mouse effect (gentle)
         if (interactive) {
           const dx = mouseRef.current.x - particle.x;
           const dy = mouseRef.current.y - particle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 150) {
-            const force = (150 - distance) / 150;
-            particle.vx += dx * force * 0.0001;
-            particle.vy += dy * force * 0.0001;
+          if (distance < 120) {
+            const force = (120 - distance) / 120;
+            particle.vx += dx * force * 0.00008;
+            particle.vy += dy * force * 0.00008;
           }
         }
 
-        // Boundary wrapping
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
+        // Boundary wrapping with smooth transition
+        if (particle.x < -10) particle.x = canvas.width + 10;
+        if (particle.x > canvas.width + 10) particle.x = -10;
+        if (particle.y < -10) particle.y = canvas.height + 10;
+        if (particle.y > canvas.height + 10) particle.y = -10;
 
-        // Velocity damping
-        particle.vx *= 0.99;
-        particle.vy *= 0.99;
+        // Gentle velocity damping
+        particle.vx *= 0.998;
+        particle.vy *= 0.998;
+
+        // Ensure minimum movement to prevent particles from stopping
+        const minSpeed = 0.1;
+        const currentSpeed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
+        if (currentSpeed < minSpeed) {
+          const angle = Math.random() * Math.PI * 2;
+          particle.vx = Math.cos(angle) * minSpeed;
+          particle.vy = Math.sin(angle) * minSpeed;
+        }
       });
     };
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      updateParticles();
-      connectParticles();
-      
-      particlesRef.current.forEach(drawParticle);
-      
-      animationRef.current = requestAnimationFrame(animate);
+      // Ensure we don't have multiple animation loops running
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
+
+      const animateFrame = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        updateParticles();
+        connectParticles();
+        
+        particlesRef.current.forEach(drawParticle);
+        
+        // Continue animation loop
+        animationRef.current = requestAnimationFrame(animateFrame);
+      };
+
+      animateFrame();
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -165,22 +182,31 @@ const AIParticles: React.FC<AIParticlesProps> = ({
       mouseRef.current.y = e.clientY - rect.top;
     };
 
+    const handleResize = () => {
+      resizeCanvas();
+      initParticles();
+    };
+
+    // Initialize
     resizeCanvas();
     initParticles();
     animate();
 
-    window.addEventListener('resize', resizeCanvas);
+    // Event listeners
+    window.addEventListener('resize', handleResize);
     if (interactive) {
       canvas.addEventListener('mousemove', handleMouseMove);
     }
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      if (interactive) {
-        canvas.removeEventListener('mousemove', handleMouseMove);
-      }
+      // Cleanup
+      isAnimatingRef.current = false;
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
+      }
+      window.removeEventListener('resize', handleResize);
+      if (interactive) {
+        canvas.removeEventListener('mousemove', handleMouseMove);
       }
     };
   }, [density, speed, interactive]);

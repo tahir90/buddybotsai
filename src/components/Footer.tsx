@@ -6,11 +6,12 @@ const Footer: React.FC = () => {
     <footer className="bg-elevated-card py-16 border-t border-neutral-stroke relative overflow-hidden" role="contentinfo">
       {/* Large outlined text background */}
       <div className="absolute inset-0 flex items-end justify-center pointer-events-none pb-8">
-        <div className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-inter font-black text-transparent select-none opacity-40"
+        <div className="font-inter font-black text-transparent select-none opacity-40 whitespace-nowrap"
              style={{
                WebkitTextStroke: '3px rgba(107, 70, 193, 0.6)',
                textStroke: '3px rgba(107, 70, 193, 0.6)',
-               lineHeight: '0.8'
+               lineHeight: '0.8',
+               fontSize: 'clamp(8rem, 15vw, 20rem)'
              }}>
           BuddyBots
         </div>

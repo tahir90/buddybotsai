@@ -47,7 +47,7 @@ const About: React.FC = () => {
               </p>
               
               <p>
-                We don't believe in hype, dashboards no one uses, or AI theater. We believe in building "buddy-fied" departments—high-performance teams powered by lean AI systems that simplify workflows, reduce costs, and scale results.
+                We don't believe in hype, dashboards no one uses, or AI theater. We believe in building <span className="text-amber-cta font-semibold">"buddy-fied" departments</span> — high-performance teams powered by lean AI systems that simplify workflows, reduce costs, and scale results.
               </p>
               
               <p>
@@ -99,7 +99,7 @@ const About: React.FC = () => {
                 </div>
                 
                 <h3 className="text-primary-text font-inter font-bold text-xl mb-4 text-center" itemProp="name">
-                  Meet Your AI Transformation Team
+                  BuddyBots AI Transformation Team
                 </h3>
                 
                 <p className="text-body-text font-inter text-base leading-relaxed mb-6 text-center">
