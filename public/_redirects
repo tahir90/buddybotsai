@@ -5,9 +5,6 @@
 # fetches the response from the marketing project under the hood. No
 # code change here — your existing company page at / keeps working.
 #
-# Two rules so /crm (no trailing slash) doesn't get redirected to
-# /crm/ which would then bounce again at the marketing edge. Order
-# matters — Netlify checks rules top-to-bottom.
-
-/crm        https://inserra-marketing.netlify.app/crm        200
-/crm/*      https://inserra-marketing.netlify.app/crm/:splat  200
+# Status 200 (not 301/302) keeps the URL bar unchanged and treats this
+# as a server-side rewrite, not a redirect.
+/crm/*  https://inserra-marketing.netlify.app/crm/:splat  200
